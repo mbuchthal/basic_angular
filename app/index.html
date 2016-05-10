@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo Angular App</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-ng-app="demoApp">
+  <ul>
+    <li>
+      <input type="text" data-ng-model="stuff">
+      <h1 data-ng-bind="stuff" data-ng-init="stuff='Stuff Here!!'"></h1>
+    </li>
+    <li>
+      <input type="text" data-ng-model="more_stuff">
+      <h1 data-ng-bind="more_stuff" data-ng-init="more_stuff='Stuff Here!!'"></h1>
+    </li>
+    <li>
+      <input type="text" data-ng-model="other_stuff">
+      <h1 data-ng-bind="other_stuff" data-ng-init="other_stuff='Stuff Here!!'"></h1>
+    </li>
+    <li>
+      <input type="text" data-ng-model="muffins_stuff">
+      <h1 data-ng-bind="muffins_stuff" data-ng-init="muffins_stuff='Stuff Here!!'"></h1>
+    </li>
+  </ul>
+  <script src="./bundle.js"></script>
+</body>
+</html>
