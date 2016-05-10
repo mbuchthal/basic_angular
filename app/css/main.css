@@ -1,5 +1,4 @@
 body {
-  display: flex;
   font-family: 'Roboto', sans-serif;
   font-size: 1em;
   background-image:
@@ -10,11 +9,23 @@ body {
 }
 
 h1 {
+  text-align: center;
+}
+
+h2 {
+  font-size: 1em;
   padding: 0 1em;
 }
 
 li {
   display: flex;
+  justify-content: space-between;
   list-style: none;
   padding: 1em;
+  height: 2em;
+}
+
+button {
+  border-radius: 6em;
+  background-color: lightcyan;
 }

@@ -6,22 +6,27 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body data-ng-app="demoApp">
+  <h1>Angular Demo</h1>
   <ul>
     <li>
       <input type="text" data-ng-model="stuff">
-      <h1 data-ng-bind="stuff" data-ng-init="stuff='Stuff Here!!'"></h1>
+      <h2 data-ng-bind="stuff" data-ng-init="stuff='Stuff Here!!'"></h2>
+      <button data-ng-click="stuff=''" data-ng-show="stuff.length">Delete</button>
     </li>
     <li>
       <input type="text" data-ng-model="more_stuff">
-      <h1 data-ng-bind="more_stuff" data-ng-init="more_stuff='Stuff Here!!'"></h1>
+      <h2 data-ng-bind="more_stuff" data-ng-init="more_stuff='More Stuff Here!!'"></h2>
+      <button data-ng-click="more_stuff=''" data-ng-show="more_stuff.length">Delete</button>
     </li>
     <li>
       <input type="text" data-ng-model="other_stuff">
-      <h1 data-ng-bind="other_stuff" data-ng-init="other_stuff='Stuff Here!!'"></h1>
+      <h2 data-ng-bind="other_stuff" data-ng-init="other_stuff='Other Stuff Here!!'"></h2>
+      <button data-ng-click="other_stuff=''" data-ng-show="other_stuff.length">Delete</button>
     </li>
     <li>
       <input type="text" data-ng-model="muffins_stuff">
-      <h1 data-ng-bind="muffins_stuff" data-ng-init="muffins_stuff='Stuff Here!!'"></h1>
+      <h2 data-ng-bind="muffins_stuff" data-ng-init="muffins_stuff='Muffin Stuff Here!!'"></h2>
+      <button data-ng-click="muffins_stuff=''" data-ng-show="muffins_stuff.length">Delete</button>
     </li>
   </ul>
   <script src="./bundle.js"></script>
