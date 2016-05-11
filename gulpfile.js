@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const webpack = require('webpack-stream');
 const nodemon = require('gulp-nodemon');
+const exec = require('child_process').exec;
 const protractor = require('gulp-protractor').protractor;
 
 var files = ['server.js', 'gulpfile.js'];
@@ -21,6 +22,12 @@ gulp.task('webpack:dev', () => {
 gulp.task('static:dev', () => {
   gulp.src(['./app/**/*.html', './app/**/*.css'])
     .pipe(gulp.dest('./build'));
+});
+
+gulp.task('selenium', (cb) => {
+  exec('webdriver-manager start', (err) => {
+    cb(err);
+  });
 });
 
 gulp.task('lint:server', () => {
@@ -44,20 +51,19 @@ gulp.task('protractor', () => {
       }))
     .on('error', (e) => { throw e; });
 });
-
 gulp.task('develop', () => {
   nodemon({
     script: 'server.js',
-    ext: 'html js css !/build/**/*',
-    ignore: [],
-    tasks: ['lint']
+    ext: 'html js css',
+    ignore: ['build'],
+    tasks: ['lint', 'protractor']
   })
   .on('restart', () => {
     console.log('restarted!');
   });
 });
 
-gulp.task('supertask', ['build:dev', 'protractor', 'develop']);
+gulp.task('supertask', ['selenium', 'build:dev', 'protractor', 'develop']);
 gulp.task('lint', ['lint:server', 'lint:browser']);
 gulp.task('build:dev', ['webpack:dev', 'static:dev']);
 gulp.task('default', ['build:dev']);
