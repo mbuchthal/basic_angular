@@ -51,6 +51,7 @@ gulp.task('protractor', () => {
       }))
     .on('error', (e) => { throw e; });
 });
+
 gulp.task('develop', () => {
   nodemon({
     script: 'server.js',
@@ -63,7 +64,7 @@ gulp.task('develop', () => {
   });
 });
 
-gulp.task('supertask', ['selenium', 'build:dev', 'protractor', 'develop']);
+gulp.task('supertask', ['lint', 'selenium', 'build:dev', 'protractor', 'develop']);
 gulp.task('lint', ['lint:server', 'lint:browser']);
 gulp.task('build:dev', ['webpack:dev', 'static:dev']);
 gulp.task('default', ['build:dev']);
