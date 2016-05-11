@@ -1,3 +1,6 @@
+html {
+  min-height: 100%;
+}
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 1em;
@@ -6,6 +9,7 @@ body {
     #BDF,
     #39C
   );
+  background-repeat: no-repeat;
 }
 
 h1 {

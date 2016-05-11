@@ -1,11 +1,13 @@
 
 {
+  "extends": "angular",
   "env": {
     "mocha": true,
-    "node": true,
     "es6": true,
+    "browser": true
   },
   "globals": {
+    "angular": 1
   },
 
   "rules": {
