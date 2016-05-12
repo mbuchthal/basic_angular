@@ -43,7 +43,7 @@ gulp.task('lint:browser', () => {
 });
 
 gulp.task('protractor', () => {
-  gulp.src(['./test/e2e/spec.js'])
+  return gulp.src(['./test/e2e/spec.js'])
     .pipe(protractor(
       {
         configFile: 'test/e2e/config.js',
@@ -67,4 +67,4 @@ gulp.task('develop', () => {
 gulp.task('supertask', ['lint', 'selenium', 'build:dev', 'protractor', 'develop']);
 gulp.task('lint', ['lint:server', 'lint:browser']);
 gulp.task('build:dev', ['webpack:dev', 'static:dev']);
-gulp.task('default', ['build:dev']);
+gulp.task('default', ['lint', 'build:dev']);

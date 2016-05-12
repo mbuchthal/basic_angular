@@ -1,5 +1,5 @@
 
-describe('angular app', function() {
+describe('hero app', function() {
   it('should have 2 way data bind', () => {
     browser.get('http://localhost:5000');
 

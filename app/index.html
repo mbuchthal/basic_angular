@@ -5,30 +5,103 @@
   <title>Demo Angular App</title>
   <link rel="stylesheet" href="css/main.css">
 </head>
-<body data-ng-app="demoApp">
+<body data-ng-app="heroApp">
   <h1>Angular Demo</h1>
-  <ul>
-    <li>
-      <input type="text" data-ng-model="stuff">
-      <h2 data-ng-bind="stuff" data-ng-init="stuff='Stuff Here!!'"></h2>
-      <button data-ng-click="stuff=''" data-ng-show="stuff.length">Delete</button>
-    </li>
-    <li>
-      <input type="text" data-ng-model="more_stuff">
-      <h2 data-ng-bind="more_stuff" data-ng-init="more_stuff='More Stuff Here!!'"></h2>
-      <button data-ng-click="more_stuff=''" data-ng-show="more_stuff.length">Delete</button>
-    </li>
-    <li>
-      <input type="text" data-ng-model="other_stuff">
-      <h2 data-ng-bind="other_stuff" data-ng-init="other_stuff='Other Stuff Here!!'"></h2>
-      <button data-ng-click="other_stuff=''" data-ng-show="other_stuff.length">Delete</button>
-    </li>
-    <li>
-      <input type="text" data-ng-model="even_more_stuff">
-      <h2 data-ng-bind="even_more_stuff" data-ng-init="even_more_stuff='Even More Here!!'"></h2>
-      <button data-ng-click="even_more_stuff=''" data-ng-show="even_more_stuff.length">Delete</button>
-    </li>
-  </ul>
+  <section data-ng-controller="HeroController as heroctrl" data-ng-init="heroctrl.getHeroes()">
+
+    <section>
+        <form data-ng-submit="heroctrl.makeHero()">
+          <label>
+            <input type="text" data-ng-model="heroctrl.newHero.name" placeholder="name">
+          </label>
+          <label>
+            <input type="text" placeholder="1-10" data-ng-model="heroctrl.newHero.powerLevel">
+          </label>
+          <label>
+            <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="heroctrl.newHero.superPower">
+          </label>
+          <label>
+            <input type="text" data-ng-model="heroctrl.newHero.archNemesis" placeholder="archnemesis">
+          </label>
+          <button type="submit">Make Hero!</button>
+        </form>
+    </section>
+
+    <ul id="herolist">
+      <li data-ng-repeat="hero in heroctrl.heroes">
+        <span data-ng-if="!hero.editing">
+      {{hero.name}} is a Hero who frequently battles {{hero.archNemesis}} with:
+        </span>
+        <span data-ng-if="!hero.editing" data-ng-repeat="superPower in hero.superPower">{{superPower}}</span>
+        <button data-ng-if="!hero.editing" data-ng-click="hero.editing = true">Edit Hero</button>
+        <button data-ng-if="!hero.editing" data-ng-click="heroctrl.deleteHero(hero)">Delete</button>
+        <form data-ng-if="hero.editing" data-ng-submit="heroctrl.editHero(hero)">
+          <label>
+            <input type="text" data-ng-model="hero.name" placeholder="name">
+          </label>
+          <label>
+            <input type="text" placeholder="1-10" data-ng-model="hero.powerLevel">
+          </label>
+          <label>
+            <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="hero.superPower">
+          </label>
+          <label>
+            <input type="text" data-ng-model="hero.archNemesis" placeholder="archnemesis">
+          </label>
+          <button data-ng-if="!bear.editing" data-ng-click="heroctrl.editHero(hero)" data-ng-click="hero.editing = false">Edit Hero</button>
+          <button data-ng-click="hero.editing = false">Cancel</button>
+        </form>
+      </li>
+    </ul>
+  </section>
+
+  <section data-ng-controller="VillainController as vilctrl" data-ng-init="vilctrl.getVillains()">
+    <section>
+        <form data-ng-submit="vilctrl.makeVillain()">
+          <label>
+            <input type="text" data-ng-model="vilctrl.newVillain.name">
+          </label>
+          <label>
+            <input type="text" placeholder="1-10" data-ng-model="vilctrl.newVillain.powerLevel">
+          </label>
+          <label>
+            <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="vilctrl.newVillain.superPower">
+          </label>
+          <label>
+            <input type="text" data-ng-model="vilctrl.newVillain.dastardlyDoGooder">
+          </label>
+          <button type="submit">Make Villain!</button>
+        </form>
+    </section>
+
+    <ul id="villainlist">
+      <li data-ng-repeat="villain in vilctrl.villains">
+        <span data-ng-if="!villain.editing">
+      {{villain.name}} is a villain who frequently battles {{villain.dastardlyDoGooder}} with:
+        </span>
+        <span data-ng-if="!villain.editing" data-ng-repeat="superPower in villain.superPower">{{superPower}}</span>
+        <button data-ng-if="!villain.editing" data-ng-click="villain.editing = true">Edit villain</button>
+        <button data-ng-if="!villain.editing" data-ng-click="vilctrl.deleteHero(villain)">Delete</button>
+        <form data-ng-if="villain.editing" data-ng-submit="vilctrl.editHero(villain)">
+          <label>
+            <input type="text" data-ng-model="villain.name">
+          </label>
+          <label>
+            <input type="text" placeholder="1-10" data-ng-model="villain.powerLevel">
+          </label>
+          <label>
+            <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="villain.superPower">
+          </label>
+          <label>
+            <input type="text" data-ng-model="villain.dastardlyDoGooder">
+          </label>
+          <button data-ng-if="!bear.editing" data-ng-click="villainctrl.editvillain(villain)" data-ng-click="villain.editing = false">Edit villain</button>
+          <button data-ng-click="villain.editing = false">Cancel</button>
+        </form>
+      </li>
+    </ul>
+  </section>
+
   <script src="./bundle.js"></script>
 </body>
 </html>
