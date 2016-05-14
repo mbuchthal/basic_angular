@@ -81,7 +81,6 @@ heroApp.controller('BattleController', ['$http', function($http) {
     $http.get(baseUrl + '/api/battle')
       .then((res) => {
         this.battles.push(res.data);
-        console.log(this.battles);
       });
   };
 }]);
