@@ -11,25 +11,25 @@
 
     <section>
         <form data-ng-submit="heroctrl.makeHero()">
-          <label>
-            <input type="text" data-ng-model="heroctrl.newHero.name" placeholder="name">
+          <label>Name:
+            <input type="text" data-ng-model="heroctrl.newHero.name">
           </label>
-          <label>
+          <label>Power Level:
             <input type="text" placeholder="1-10" data-ng-model="heroctrl.newHero.powerLevel">
           </label>
-          <label>
+          <label>Super Powers:
             <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="heroctrl.newHero.superPower">
           </label>
-          <label>
-            <input type="text" data-ng-model="heroctrl.newHero.archNemesis" placeholder="archnemesis">
+          <label>Archnemesis:
+            <input type="text" data-ng-model="heroctrl.newHero.archNemesis">
           </label>
           <button type="submit">Make Hero!</button>
         </form>
     </section>
 
     <ul id="herolist">
-      <li data-ng-repeat="hero in heroctrl.heroes">
-        <span data-ng-if="!hero.editing">
+      <li class="hero" data-ng-repeat="hero in heroctrl.heroes">
+        <span id="heroname" data-ng-if="!hero.editing">
       {{hero.name}} is a Hero who frequently battles {{hero.archNemesis}} with:
         </span>
         <span data-ng-if="!hero.editing" data-ng-repeat="superPower in hero.superPower">{{superPower}}</span>
@@ -58,16 +58,16 @@
   <section data-ng-controller="VillainController as vilctrl" data-ng-init="vilctrl.getVillains()">
     <section>
         <form data-ng-submit="vilctrl.makeVillain()">
-          <label>
+          <label>Name:
             <input type="text" data-ng-model="vilctrl.newVillain.name">
           </label>
-          <label>
+          <label>Power Level:
             <input type="text" placeholder="1-10" data-ng-model="vilctrl.newVillain.powerLevel">
           </label>
-          <label>
+          <label>Super Powers:
             <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="vilctrl.newVillain.superPower">
           </label>
-          <label>
+          <label>Archnemesis:
             <input type="text" data-ng-model="vilctrl.newVillain.dastardlyDoGooder">
           </label>
           <button type="submit">Make Villain!</button>
@@ -81,7 +81,7 @@
         </span>
         <span data-ng-if="!villain.editing" data-ng-repeat="superPower in villain.superPower">{{superPower}}</span>
         <button data-ng-if="!villain.editing" data-ng-click="villain.editing = true">Edit villain</button>
-        <button data-ng-if="!villain.editing" data-ng-click="vilctrl.deleteHero(villain)">Delete</button>
+        <button data-ng-if="!villain.editing" data-ng-click="vilctrl.deleteVillain(villain)">Delete</button>
         <form data-ng-if="villain.editing" data-ng-submit="vilctrl.editHero(villain)">
           <label>
             <input type="text" data-ng-model="villain.name">
@@ -95,11 +95,16 @@
           <label>
             <input type="text" data-ng-model="villain.dastardlyDoGooder">
           </label>
-          <button data-ng-if="!bear.editing" data-ng-click="villainctrl.editvillain(villain)" data-ng-click="villain.editing = false">Edit villain</button>
+          <button data-ng-if="!bear.editing" data-ng-click="vilctrl.editVillain(villain)" data-ng-click="villain.editing = false">Edit villain</button>
           <button data-ng-click="villain.editing = false">Cancel</button>
         </form>
       </li>
     </ul>
+  </section>
+
+  <section class="battles" data-ng-controller="BattleController as battlectrl">
+    <button data-ng-click="battlectrl.battle()">Battle Button!</button>
+      <p data-ng-repeat="battle in battlectrl.battles">{{battle}}</p>
   </section>
 
   <script src="./bundle.js"></script>

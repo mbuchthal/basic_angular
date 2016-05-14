@@ -1,8 +1,6 @@
 
 const angular = require('angular');
-
 const heroApp = angular.module('heroApp', []);
-
 const baseUrl = 'http://localhost:3000';
 
 var handleError = function(error) {
@@ -12,6 +10,7 @@ var handleError = function(error) {
 
 heroApp.controller('HeroController', ['$http', function($http) {
   this.heroes = [];
+
   this.getHeroes = () => {
     $http.get(baseUrl + '/api/heroes')
       .then((res) => {
@@ -44,6 +43,7 @@ heroApp.controller('HeroController', ['$http', function($http) {
 
 heroApp.controller('VillainController', ['$http', function($http) {
   this.villains = [];
+
   this.getVillains = () => {
     $http.get(baseUrl + '/api/villains')
       .then((res) => {
@@ -71,5 +71,17 @@ heroApp.controller('VillainController', ['$http', function($http) {
       .then(() => {
         villain.editing = false;
       }, handleError.bind(this));
+  };
+}]);
+
+heroApp.controller('BattleController', ['$http', function($http) {
+  this.battles = [];
+
+  this.battle = () => {
+    $http.get(baseUrl + '/api/battle')
+      .then((res) => {
+        this.battles.push(res.data);
+        console.log(this.battles);
+      });
   };
 }]);
