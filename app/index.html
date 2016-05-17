@@ -28,14 +28,15 @@
     </section>
 
     <ul id="herolist">
-      <li class="hero" data-ng-repeat="hero in heroctrl.heroes">
-        <span id="heroname" data-ng-if="!hero.editing">
-      {{hero.name}} is a Hero who frequently battles {{hero.archNemesis}} with:
-        </span>
-        <span data-ng-if="!hero.editing" data-ng-repeat="superPower in hero.superPower">{{superPower}}</span>
-        <button data-ng-if="!hero.editing" data-ng-click="hero.editing = true">Edit Hero</button>
-        <button data-ng-if="!hero.editing" data-ng-click="heroctrl.deleteHero(hero)">Delete</button>
-        <form data-ng-if="hero.editing" data-ng-submit="heroctrl.editHero(hero)">
+      <li class="hero" data-ng-repeat="hero in heroctrl.heroes" id="hero_item_{{$index}}">
+        <p data-ng-if="!hero.editing">
+          <span id="heroname">{{hero.name}}</span>
+          <span>is a Hero who frequently battles {{hero.archNemesis}} with: </span>
+          <span data-ng-if="!hero.editing" data-ng-repeat="superPower in hero.superPower">{{superPower}}{{$last ? '.' : ', and'}}</span>
+        </p>
+        <button id="edit_button" data-ng-if="!hero.editing" data-ng-click="hero.editing = true">Edit Hero</button>
+        <button id="delete_button" data-ng-if="!hero.editing" data-ng-click="heroctrl.deleteHero(hero)">Delete</button>
+        <form class="hero_form" data-ng-if="hero.editing" data-ng-submit="heroctrl.editHero(hero)">
           <label>
             <input type="text" data-ng-model="hero.name" placeholder="name">
           </label>
@@ -48,8 +49,8 @@
           <label>
             <input type="text" data-ng-model="hero.archNemesis" placeholder="archnemesis">
           </label>
-          <button data-ng-if="!bear.editing" data-ng-click="heroctrl.editHero(hero)" data-ng-click="hero.editing = false">Edit Hero</button>
-          <button data-ng-click="hero.editing = false">Cancel</button>
+          <button id="update_button_{{$index}}" class="update_button" data-ng-if="hero.editing" data-ng-click="heroctrl.editHero(hero)" data-ng-click="hero.editing = false">Update</button>
+          <button class="cancel_button" data-ng-click="hero.editing = false">Cancel</button>
         </form>
       </li>
     </ul>
@@ -75,12 +76,13 @@
     </section>
 
     <ul id="villainlist">
-      <li data-ng-repeat="villain in vilctrl.villains">
-        <span data-ng-if="!villain.editing">
-      {{villain.name}} is a villain who frequently battles {{villain.dastardlyDoGooder}} with:
-        </span>
-        <span data-ng-if="!villain.editing" data-ng-repeat="superPower in villain.superPower">{{superPower}}</span>
-        <button data-ng-if="!villain.editing" data-ng-click="villain.editing = true">Edit villain</button>
+      <li class="villain" data-ng-repeat="villain in vilctrl.villains" id="villian_item_{{$index}}">
+        <p data-ng-if="!villain.editing">
+          <span id="villainname">{{villain.name}}</span>
+          <span>is a Hero who frequently battles {{villain.archNemesis}} with: </span>
+          <span data-ng-if="!villain.editing" data-ng-repeat="superPower in villain.superPower">{{superPower}}{{$last ? '.' : ', and'}}</span>
+        </p>
+        <button data-ng-if="!villain.editing" data-ng-click="villain.editing = true">Edit Villain</button>
         <button data-ng-if="!villain.editing" data-ng-click="vilctrl.deleteVillain(villain)">Delete</button>
         <form data-ng-if="villain.editing" data-ng-submit="vilctrl.editHero(villain)">
           <label>
@@ -95,7 +97,7 @@
           <label>
             <input type="text" data-ng-model="villain.dastardlyDoGooder">
           </label>
-          <button data-ng-if="!bear.editing" data-ng-click="vilctrl.editVillain(villain)" data-ng-click="villain.editing = false">Edit villain</button>
+          <button data-ng-if="!bear.editing" data-ng-click="vilctrl.editVillain(villain)" data-ng-click="villain.editing = false">Update</button>
           <button data-ng-click="villain.editing = false">Cancel</button>
         </form>
       </li>
