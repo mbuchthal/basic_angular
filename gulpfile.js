@@ -15,10 +15,10 @@ var nodemonOptions = {
   script: 'server.js',
   ext: 'html css js',
   ignore: ['build/'],
-  tasks: ['lint', 'build']
+  tasks: ['build']
 };
 
-gulp.task('default', () => {
+gulp.task('default', ['build'], () => {
   livereload.listen();
   nodemon(nodemonOptions).on('restart', () => {
     gulp.src('server.js')

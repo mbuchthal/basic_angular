@@ -1,0 +1,28 @@
+
+<ul id="herolist">
+  <li class="hero" data-ng-repeat="hero in heroctrl.heroes" id="hero_item_{{$index}}">
+    <p data-ng-if="!hero.editing">
+      <span id="heroname">{{hero.name}}</span>
+      <span>is a Hero who frequently battles {{hero.archNemesis}} with: </span>
+      <span data-ng-if="!hero.editing" data-ng-repeat="superPower in hero.superPower">{{superPower}}{{$last ? '.' : ', and'}}</span>
+    </p>
+    <button id="edit_button" data-ng-if="!hero.editing" data-ng-click="hero.editing = true; heroctrl.heroStore(hero)">Edit Hero</button>
+    <button id="delete_button" data-ng-if="!hero.editing" data-ng-click="heroctrl.deleteHero(hero)">Delete</button>
+    <form class="hero_form" data-ng-if="hero.editing" data-ng-submit="heroctrl.editHero(hero)">
+      <label>
+        <input type="text" data-ng-model="hero.name" placeholder="name">
+      </label>
+      <label>
+        <input type="text" placeholder="1-10" data-ng-model="hero.powerLevel">
+      </label>
+      <label>
+        <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="hero.superPower">
+      </label>
+      <label>
+        <input type="text" data-ng-model="hero.archNemesis" placeholder="archnemesis">
+      </label>
+      <button id="update_button_{{$index}}" class="update_button" data-ng-if="hero.editing" data-ng-click="heroctrl.editHero(hero); hero.editing = false">Update</button>
+      <button class="cancel_button" data-ng-click="hero.editing = false; heroctrl.heroReset(hero)">Cancel</button>
+    </form>
+  </li>
+</ul>
