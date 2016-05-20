@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const webpack = require('webpack-stream');
 const nodemon = require('gulp-nodemon');
+const livereload = require('gulp-livereload');
 const cp = require('child_process');
 const protractor = require('gulp-protractor').protractor;
 const mongoUri = 'mongodb://localhost/test_server';
@@ -9,6 +10,22 @@ const mongoUri = 'mongodb://localhost/test_server';
 var files = ['server.js', 'gulpfile.js'];
 var appFiles = 'app/**/*.js';
 var children = [];
+
+var nodemonOptions = {
+  script: 'server.js',
+  ext: 'html css js',
+  ignore: ['build/'],
+  tasks: ['lint', 'build']
+};
+
+gulp.task('default', () => {
+  livereload.listen();
+  nodemon(nodemonOptions).on('restart', () => {
+    gulp.src('server.js')
+      .pipe(livereload());
+    console.log('restarted');
+  });
+});
 
 gulp.task('webpack:dev', ['lint'], () => {
   return gulp.src('app/js/entry.js')
@@ -91,4 +108,4 @@ gulp.task('watch', ['lint', 'build:dev', 'develop']);
 gulp.task('lint', ['lint:server', 'lint:browser']);
 gulp.task('build:dev', ['webpack:dev', 'static:dev', 'css:dev']);
 gulp.task('build', ['lint', 'build:dev']);
-gulp.task('default', ['startservers:test', 'build']);
+gulp.task('server-default', ['startservers:test', 'build']);
