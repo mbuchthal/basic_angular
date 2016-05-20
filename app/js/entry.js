@@ -8,8 +8,9 @@ var handleError = function(error) {
   this.errors = (this.errors || []).push(error);
 };
 
-heroApp.controller('HeroController', ['$http', function($http) {
+heroApp.controller('HeroController', ['$http', '$scope', function($http, $scope) {
   this.heroes = [];
+  $scope.master = {};
 
   this.getHeroes = () => {
     $http.get(baseUrl + '/api/heroes')
@@ -36,13 +37,24 @@ heroApp.controller('HeroController', ['$http', function($http) {
   this.editHero = (hero) => {
     $http.put(baseUrl + '/api/heroes/' + hero._id, hero)
       .then(() => {
+        $scope.master = angular.copy(hero);
         hero.editing = false;
       }, handleError.bind(this));
   };
+
+  this.heroStore = function(hero) {
+    $scope.master = angular.copy(hero);
+  };
+
+  this.heroReset = function(hero) {
+    var oldHero = this.heroes[this.heroes.indexOf(hero)];
+    angular.copy($scope.master, oldHero);
+  };
 }]);
 
-heroApp.controller('VillainController', ['$http', function($http) {
+heroApp.controller('VillainController', ['$http', '$scope', function($http, $scope) {
   this.villains = [];
+  $scope.master = {};
 
   this.getVillains = () => {
     $http.get(baseUrl + '/api/villains')
@@ -71,6 +83,15 @@ heroApp.controller('VillainController', ['$http', function($http) {
       .then(() => {
         villain.editing = false;
       }, handleError.bind(this));
+  };
+
+  this.vilStore = function(villain) {
+    $scope.master = angular.copy(villain);
+  };
+
+  this.vilReset = function(villain) {
+    var oldVillain = this.villains[this.villains.indexOf(villain)];
+    angular.copy($scope.master, oldVillain);
   };
 }]);
 
