@@ -3,15 +3,17 @@ require('angular-mocks');
 
 describe('hero controller', function() {
   var $controller;
+  var $scope;
 
   beforeEach(angular.mock.module('heroApp'));
 
-  beforeEach(angular.mock.inject(function(_$controller_) {
+  beforeEach(angular.mock.inject(function(_$controller_, $rootScope) {
     $controller = _$controller_;
+    $scope = $rootScope.$new();
   }));
 
   it('should be a controller', function() {
-    var heroctrl = $controller('HeroController');
+    var heroctrl = $controller('HeroController', {$scope});
     expect(typeof heroctrl).toBe('object');
     expect(typeof heroctrl.getHeroes).toBe('function');
   });
@@ -22,7 +24,7 @@ describe('hero controller', function() {
 
     beforeEach(angular.mock.inject(function(_$httpBackend_) {
       $httpBackend = _$httpBackend_;
-      heroctrl = $controller('HeroController');
+      heroctrl = $controller('HeroController', {$scope});
     }));
 
     afterEach(function() {

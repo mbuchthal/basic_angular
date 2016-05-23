@@ -3,15 +3,17 @@ require('angular-mocks');
 
 describe('villain controller', function() {
   var $controller;
+  var $scope;
 
   beforeEach(angular.mock.module('heroApp'));
 
-  beforeEach(angular.mock.inject(function(_$controller_) {
+  beforeEach(angular.mock.inject(function(_$controller_, $rootScope) {
     $controller = _$controller_;
+    $scope = $rootScope.$new();
   }));
 
   it('should be a controller', function() {
-    var vilctrl = $controller('VillainController');
+    var vilctrl = $controller('VillainController', {$scope});
     expect(typeof vilctrl).toBe('object');
     expect(typeof vilctrl.getVillains).toBe('function');
   });
@@ -22,7 +24,7 @@ describe('villain controller', function() {
 
     beforeEach(angular.mock.inject(function(_$httpBackend_) {
       $httpBackend = _$httpBackend_;
-      vilctrl = $controller('VillainController');
+      vilctrl = $controller('VillainController', {$scope});
     }));
 
     afterEach(function() {
