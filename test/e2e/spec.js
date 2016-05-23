@@ -11,7 +11,7 @@ describe('hero app', function() {
 
   it('should update hero data', () => {
     browser.get('http://localhost:5000');
-    var liItem = element(by.repeater("hero in heroctrl.heroes").row(0));
+    var liItem = element(by.repeater('hero in heroctrl.heroes').row(0));
 
     liItem.element(by.buttonText('Edit Hero')).click();
     liItem.element(by.model('hero.name')).clear().sendKeys('test 2');
@@ -23,7 +23,7 @@ describe('hero app', function() {
 
   it('should cancel on hero edit form', () => {
     browser.get('http://localhost:5000');
-    var liItem = element(by.repeater("hero in heroctrl.heroes").row(0));
+    var liItem = element(by.repeater('hero in heroctrl.heroes').row(0));
     liItem.element(by.buttonText('Edit Hero')).click();
     liItem.element(by.buttonText('Cancel')).click();
     element(by.css('span')).getText().then(function(text) {
@@ -38,7 +38,7 @@ describe('hero app', function() {
     expect(myElement.isPresent()).toBeFalsy();
   });
 
-    it('should create villain data', () => {
+  it('should create villain data', () => {
     browser.get('http://localhost:5000');
     element(by.model('villain.name')).sendKeys('test');
     element(by.buttonText('Make Villain')).click();
@@ -49,7 +49,7 @@ describe('hero app', function() {
 
   it('should update villain data', () => {
     browser.get('http://localhost:5000');
-    var liItem = element(by.repeater("villain in vilctrl.villains").row(0));
+    var liItem = element(by.repeater('villain in vilctrl.villains').row(0));
 
     liItem.element(by.buttonText('Edit Villain')).click();
     liItem.element(by.model('villain.name')).clear().sendKeys('test 2');
@@ -61,7 +61,7 @@ describe('hero app', function() {
 
   it('should cancel on edit villain form', () => {
     browser.get('http://localhost:5000');
-    var liItem = element(by.repeater("villain in vilctrl.villains").row(0));
+    var liItem = element(by.repeater('villain in vilctrl.villains').row(0));
     liItem.element(by.buttonText('Edit Villain')).click();
     liItem.element(by.buttonText('Cancel')).click();
     element(by.css('span')).getText().then(function(text) {

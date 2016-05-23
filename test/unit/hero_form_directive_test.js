@@ -4,10 +4,10 @@ const heroFormTemplate = require('../../app/templates/directives/hero_form.html'
 
 describe('hero form directive', function() {
   beforeEach(angular.mock.module('heroApp'));
-    var $httpBackend;
-    var $compile;
-    var $scope;
-    var $rootScope;
+  var $httpBackend;
+  var $compile;
+  var $scope;
+  var $rootScope;
 
   beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$httpBackend_) {
     $httpBackend = _$httpBackend_;
@@ -20,11 +20,11 @@ describe('hero form directive', function() {
     $httpBackend.expectGET('templates/hero_form.html').respond(200, heroFormTemplate);
 
     $scope.name = 'test name';
-    var link = $compile('')
+    var link = $compile('<div data-hero-form data></div>');
     var directive = link($scope);
     $httpBackend.flush();
     $scope.$digest();
-    var el = directive.find('')
+    var el = directive.find('');
     expect(el.text()).toEqual($scope.name);
     var input = directive.find('input');
     input.val('new test name');

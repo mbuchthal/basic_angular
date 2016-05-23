@@ -9,6 +9,7 @@ const mongoUri = 'mongodb://localhost/test_server';
 
 var files = ['server.js', 'gulpfile.js'];
 var appFiles = 'app/**/*.js';
+var testFiles = ['test/e2e/**/*.js', 'test/unit/**/*.js'];
 var children = [];
 
 var nodemonOptions = {
@@ -75,6 +76,17 @@ gulp.task('lint:server', () => {
 gulp.task('lint:browser', () => {
   return gulp.src(appFiles)
   .pipe(eslint())
+  .pipe(eslint.format());
+});
+
+gulp.task('lint:test', () => {
+  return gulp.src(testFiles)
+  .pipe(eslint({
+      'env': {
+        'browser': true,
+        'jasmine': true
+      }
+    }))
   .pipe(eslint.format());
 });
 
