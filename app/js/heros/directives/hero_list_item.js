@@ -5,7 +5,7 @@ module.exports = function(app) {
       restrict: 'EAC',
       replace: true,
       require: '^ngController',
-      // transclude: true,
+      transclude: true,
       templateUrl: '/templates/heros/directives/hero_list_item.html',
       scope: {
         hero: '='
@@ -13,7 +13,6 @@ module.exports = function(app) {
       link: function(scope, element, attr, controller) {
         scope.remove = controller.deleteHero;
         scope.store = controller.heroStore;
-        scope.reset = controller.heroReset;
       }
     };
   });

@@ -13,7 +13,6 @@ module.exports = function(app) {
       link: function(scope, element, attr, controller) {
         scope.remove = controller.deleteVillain;
         scope.store = controller.vilStore;
-        scope.reset = controller.vilReset;
       }
     };
   });

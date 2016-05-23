@@ -4,7 +4,7 @@ module.exports = function(app) {
     return {
       restrict: 'EAC',
       require: '^ngController',
-      // transclude: true,
+      transclude: true,
       templateUrl: '/templates/heros/directives/hero_form.html',
       scope: {
         hero: '=',
