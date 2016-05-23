@@ -84,7 +84,8 @@ gulp.task('lint:test', () => {
   .pipe(eslint({
       'env': {
         'browser': true,
-        'jasmine': true
+        'jasmine': true,
+        'protractor': true
       }
     }))
   .pipe(eslint.format());
