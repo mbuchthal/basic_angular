@@ -1,4 +1,6 @@
 
+var baseUrl = require('../../config').baseUrl;
+
 module.exports = function(app) {
   app.controller('BattleController', ['$http', function($http) {
     this.battles = [];

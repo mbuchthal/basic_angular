@@ -14,7 +14,7 @@ module.exports = function(app) {
         }, handleError.bind(this));
     };
 
-    this.makeHero = function() {
+    this.makeHero = () => {
       $http.post(baseUrl + '/api/heroes', this.newHero)
         .then((res) => {
           this.heroes.push(res.data);
@@ -22,14 +22,14 @@ module.exports = function(app) {
         }, handleError.bind(this));
     };
 
-    this.deleteHero = function(hero) {
+    this.deleteHero = (hero) => {
       $http.delete(baseUrl + '/api/heroes/' + hero._id)
         .then(() => {
           this.heroes.splice(this.heroes.indexOf(hero), 1);
         }, handleError.bind(this));
     };
 
-    this.editHero = function(hero) {
+    this.editHero = (hero) => {
       $http.put(baseUrl + '/api/heroes/' + hero._id, hero)
         .then(() => {
           $scope.master = angular.copy(hero);
@@ -37,13 +37,13 @@ module.exports = function(app) {
         }, handleError.bind(this));
     };
 
-    this.heroStore = function(hero) {
+    this.heroStore = (hero) => {
       $scope.master = angular.copy(hero);
     };
 
-    this.heroReset = function(hero) {
+    this.heroReset = (hero) => {
       var oldHero = this.heroes[this.heroes.indexOf(hero)];
       angular.copy($scope.master, oldHero);
     };
   }]);
-}
+};

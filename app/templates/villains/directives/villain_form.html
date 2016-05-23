@@ -1,18 +1,13 @@
 
-<section>
-  <form data-ng-submit="vilctrl.makeVillain()">
-    <label>Name:
-      <input type="text" data-ng-model="vilctrl.newVillain.name">
-    </label>
-    <label>Power Level:
-      <input type="text" placeholder="1-10" data-ng-model="vilctrl.newVillain.powerLevel">
-    </label>
-    <label>Super Powers:
-      <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="vilctrl.newVillain.superPower">
-    </label>
-    <label>Archnemesis:
-      <input type="text" data-ng-model="vilctrl.newVillain.dastardlyDoGooder">
-    </label>
-    <button type="submit">Make Villain!</button>
-  </form>
-</section>
+<form data-ng-submit="save(villain)">
+  <label>Name:
+    <input type="text" data-ng-model="villain.name"></label>
+  <label>Power Level:
+    <input type="text" placeholder="1-10" data-ng-model="villain.powerLevel"></label>
+  <label>Super Powers:
+    <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="villain.superPower"></label>
+  <label>Archnemesis:
+    <input type="text" data-ng-model="villain.dastardlyDoGooder"></label>
+  <button type="submit">{{buttonText}}</button>
+  <ng-transclude></ng-transclude>
+</form>

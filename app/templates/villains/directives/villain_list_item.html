@@ -1,28 +1,10 @@
 
-<ul id="villainlist">
-  <li class="villain" data-ng-repeat="villain in vilctrl.villains" id="villian_item_{{$index}}">
-    <p data-ng-if="!villain.editing">
-      <span id="villainname">{{villain.name}}</span>
-      <span>is a Villain who frequently battles {{villain.archNemesis}} with: </span>
-      <span data-ng-if="!villain.editing" data-ng-repeat="superPower in villain.superPower">{{superPower}}{{$last ? '.' : ', and '}}</span>
-    </p>
-    <button data-ng-if="!villain.editing" data-ng-click="villain.editing = true; vilctrl.vilStore(villain)">Edit Villain</button>
-    <button data-ng-if="!villain.editing" data-ng-click="vilctrl.deleteVillain(villain)">Delete</button>
-    <form data-ng-if="villain.editing" data-ng-submit="vilctrl.editVillain(villain)">
-      <label>
-        <input type="text" data-ng-model="villain.name">
-      </label>
-      <label>
-        <input type="text" placeholder="1-10" data-ng-model="villain.powerLevel">
-      </label>
-      <label>
-        <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="villain.superPower">
-      </label>
-      <label>
-        <input type="text" data-ng-model="villain.dastardlyDoGooder">
-      </label>
-      <button data-ng-if="villain.editing" data-ng-click="vilctrl.editVillain(villain); villain.editing = false">Update</button>
-      <button data-ng-click="villain.editing = false; vilctrl.vilReset(villain)">Cancel</button>
-    </form>
-  </li>
-</ul>
+<li>
+  <ng-transclude></ng-transclude>
+  <p data-ng-if="!villain.editing">
+    <span>{{villain.name}} is a Villain who frequently battles {{villain.dastardlyDoGooder}} with:
+    <span data-ng-if="!villain.editing" data-ng-repeat="superPower in villain.superPower">{{superPower}}{{$last ? '.' : ', '}}</span></span>
+  </p>
+  <button data-ng-if="!villain.editing" data-ng-click="villain.editing = true; store(villain)">Edit Villain</button>
+  <button data-ng-if="!villain.editing" data-ng-click="remove(villain)">Delete</button>
+</li>

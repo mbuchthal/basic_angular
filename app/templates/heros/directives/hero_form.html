@@ -1,20 +1,13 @@
 
-
-<section>
-  <form data-ng-submit="heroctrl.makeHero()">
-    <label>Name:
-      <input type="text" data-ng-model="heroctrl.newHero.name">
-    </label>
-    <label>Power Level:
-      <input type="text" placeholder="1-10" data-ng-model="heroctrl.newHero.powerLevel">
-    </label>
-    <label>Super Powers:
-      <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="heroctrl.newHero.superPower">
-    </label>
-    <label>Archnemesis:
-      <input type="text" data-ng-model="heroctrl.newHero.archNemesis">
-    </label>
-    <button type="submit">Make Hero!</button>
-  </form>
-</section>
-
+<form data-ng-submit="save(hero)">
+  <label for="name">Name:</label>
+    <input type="text" name="name" data-ng-model="hero.name">
+  <label for="powerLevel">Power Level:</label>
+    <input type="text" name="powerLevel" placeholder="1-10" data-ng-model="hero.powerLevel">
+  <label for="superPower">Super Powers:</label>
+    <input data-ng-list type="text" name="superPower" placeholder="power1, power2, power3" data-ng-model="hero.superPower">
+  <label for="archNemesis">Archnemesis:</label>
+    <input type="text" name="archNemesis" data-ng-model="hero.archNemesis">
+  <button type="submit">{{buttonText}}</button>
+<!--   <ng-transclude></ng-transclude>
+ --></form>
