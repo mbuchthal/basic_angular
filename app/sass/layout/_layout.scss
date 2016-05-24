@@ -22,8 +22,10 @@ h2 {
   text-align: center;
 }
 
+ul {
+  @include flexbox(left, left, row);
+}
 li {
-  display: flex;
   justify-content: space-between;
   list-style: none;
   padding: 1em;

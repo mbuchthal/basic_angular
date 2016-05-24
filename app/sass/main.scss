@@ -1,10 +1,11 @@
 
 @import 'base/reset';
 @import 'theme/typography';
+@import 'modules/mixins/flexbox';
 @import 'layout/layout';
-
-/*-- modules --*/
 @import 'layout/hero_list';
+/*-- modules --*/
+
 @import 'modules/header';
 @import 'modules/form'
 
