@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Demo Angular App</title>
+  <link href='https://fonts.googleapis.com/css?family=Candal|Architects+Daughter' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="main.css">
 </head>
 <body data-ng-app="heroApp">
   <header>
-    <h1>Heroes vs. Villains</h1>
+    <h1><span>Heros</span> vs. <span>Villains</span></h1>
     <p>An Angular.js Demo</p>
   </header>
-  <section data-ng-controller="HeroController as heroctrl" data-ng-init="heroctrl.getHeroes()">
+
+<div class="create_new">
+  <section class="heroes" data-ng-controller="HeroController as heroctrl" data-ng-init="heroctrl.getHeroes()">
     <h2>Heroes:</h2>
     <hero-form
       data-button-text="Make Hero"
@@ -31,7 +34,8 @@
     </ul>
   </section>
 
-  <section data-ng-controller="VillainController as vilctrl" data-ng-init="vilctrl.getVillains()">
+
+  <section class="villains" data-ng-controller="VillainController as vilctrl" data-ng-init="vilctrl.getVillains()">
     <h2>Villains:</h2>
     <villain-form
       data-button-text="Make Villain"
@@ -51,6 +55,7 @@
       </villain-list-item>
     </ul>
   </section>
+</div>
 
   <section class="battles" data-ng-controller="BattleController as battlectrl">
     <h2>Battle!</h2>

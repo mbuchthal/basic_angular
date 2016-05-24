@@ -2,5 +2,9 @@
 @import 'base/reset';
 @import 'theme/typography';
 @import 'layout/layout';
+
+/*-- modules --*/
+@import 'layout/hero_list';
 @import 'modules/header';
+@import 'modules/form'
 
