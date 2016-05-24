@@ -17,9 +17,10 @@ describe('hero form directive', function() {
   }));
 
   it('should create a form directive with a controller binding', function() {
-    $httpBackend.expectGET('templates/hero_form.html').respond(200, heroFormTemplate);
+    $httpBackend.expectGET('/templates/heros/directives/hero_list_item.html')
+      .respond(200, heroFormTemplate);
 
-    $scope.name = 'test name';
+    $scope.hero.name = 'test name';
     var link = $compile('<div data-hero-form data></div>');
     var directive = link($scope);
     $httpBackend.flush();
@@ -29,6 +30,6 @@ describe('hero form directive', function() {
     var input = directive.find('input');
     input.val('new test name');
     input.triggerHandler('input');
-    expect($scope.name).toEqual('some test name');
+    expect($scope.hero.name).toEqual('some test name');
   });
 });

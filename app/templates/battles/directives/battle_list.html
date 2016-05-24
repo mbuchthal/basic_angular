@@ -1,2 +1,6 @@
 
-<p data-ng-repeat="battle in battlectrl.battles">{{battle}}</p>
+<li>
+  <ng-transclude></ng-transclude>
+  <p>Battle -- {{battle}}</p>
+  <button data-ng-click="remove(battle)">Clear</button>
+</li>

@@ -1,8 +1,9 @@
+
 html {
   min-height: 100%;
 }
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: $font-main;
   font-size: 1em;
   background-image:
   radial-gradient(
