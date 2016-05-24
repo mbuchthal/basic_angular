@@ -6,10 +6,25 @@ body {
   font-family: $font-main;
   background-image:
   radial-gradient(
-    #BDF,
+    #EED2EE,
     #39C
   );
   background-repeat: no-repeat;
+  ::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    z-index: -1;
+    background-image:
+      radial-gradient(
+      circle at center left,
+      #EED2EE,
+      #F00
+    );
+  }
 }
 
 h1 {
@@ -29,7 +44,6 @@ li {
   justify-content: space-between;
   list-style: none;
   padding: 1em;
-  height: 2em;
 }
 
 button {
