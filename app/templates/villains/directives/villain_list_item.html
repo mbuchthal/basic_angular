@@ -1,0 +1,10 @@
+
+<li>
+  <ng-transclude></ng-transclude>
+  <p data-ng-if="!villain.editing">
+    <span>{{villain.name}} is a Villain who frequently battles {{villain.dastardlyDoGooder}} with:
+    <span data-ng-if="!villain.editing" data-ng-repeat="superPower in villain.superPower">{{superPower}}{{$last ? '.' : ', '}}</span></span>
+  </p>
+  <button data-ng-if="!villain.editing" data-ng-click="villain.editing = true; store(villain)">Edit Villain</button>
+  <button data-ng-if="!villain.editing" data-ng-click="remove(villain)">Delete</button>
+</li>

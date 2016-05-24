@@ -1,0 +1,24 @@
+div.create_new {
+  display: flex;
+  section {
+    h2 {
+      font-size: 1.5em;
+      padding: 0 0 1em 0;
+      &:first-child {
+        font-family: $font-hero;
+      }
+    }
+    &.heroes {
+      width: 50%;
+      padding: 1em 2em;
+    }
+    &.villains {
+      width: 50%;
+      padding: 1em 2em;
+      h2 {
+        font-family: $font-villain;
+
+      }
+    }
+  }
+}

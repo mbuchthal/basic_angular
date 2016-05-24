@@ -1,9 +1,9 @@
+
 html {
   min-height: 100%;
 }
 body {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1em;
+  font-family: $font-main;
   background-image:
   radial-gradient(
     #BDF,
@@ -19,10 +19,13 @@ h1 {
 h2 {
   font-size: 1em;
   padding: 0 1em;
+  text-align: center;
 }
 
+ul {
+  @include flexbox(left, left, row);
+}
 li {
-  display: flex;
   justify-content: space-between;
   list-style: none;
   padding: 1em;

@@ -3,15 +3,17 @@ require('angular-mocks');
 
 describe('villain controller', function() {
   var $controller;
+  var $scope;
 
   beforeEach(angular.mock.module('heroApp'));
 
-  beforeEach(angular.mock.inject(function(_$controller_) {
+  beforeEach(angular.mock.inject(function(_$controller_, $rootScope) {
     $controller = _$controller_;
+    $scope = $rootScope.$new();
   }));
 
   it('should be a controller', function() {
-    var vilctrl = $controller('VillainController');
+    var vilctrl = $controller('VillainController', { $scope });
     expect(typeof vilctrl).toBe('object');
     expect(typeof vilctrl.getVillains).toBe('function');
   });
@@ -22,7 +24,7 @@ describe('villain controller', function() {
 
     beforeEach(angular.mock.inject(function(_$httpBackend_) {
       $httpBackend = _$httpBackend_;
-      vilctrl = $controller('VillainController');
+      vilctrl = $controller('VillainController', { $scope });
     }));
 
     afterEach(function() {
@@ -31,7 +33,8 @@ describe('villain controller', function() {
     });
 
     it('should send GET request for villains', function() {
-      $httpBackend.expectGET('http://localhost:3000/api/villains').respond(200, [{ name: 'test villain' }]);
+      $httpBackend.expectGET('http://localhost:3000/api/villains')
+        .respond(200, [{ name: 'test villain' }]);
       vilctrl.getVillains();
       $httpBackend.flush();
       expect(vilctrl.villains.length).toBe(1);
@@ -39,7 +42,8 @@ describe('villain controller', function() {
     });
 
     it('should send POST request for villains', function() {
-      $httpBackend.expectPOST('http://localhost:3000/api/villains', { name: 'test villain' }).respond(200, { name: 'other villain' });
+      $httpBackend.expectPOST('http://localhost:3000/api/villains',
+        { name: 'test villain' }).respond(200, { name: 'other villain' });
       expect(vilctrl.villains.length).toBe(0);
       vilctrl.newVillain = { name: 'test villain' };
       vilctrl.makeVillain();
@@ -49,7 +53,8 @@ describe('villain controller', function() {
     });
 
     it('should update villains on PUT', function() {
-      $httpBackend.expectPUT('http://localhost:3000/api/villains/1', { name: 'update villain', editing: true, _id: 1 }).respond(200);
+      $httpBackend.expectPUT('http://localhost:3000/api/villains/1',
+        { name: 'update villain', editing: true, _id: 1 }).respond(200);
       vilctrl.villains = [{ name: 'test villain', editing: true, _id: 1 }];
       vilctrl.villains[0].name = 'update villain';
       vilctrl.editVillain(vilctrl.villains[0]);
@@ -58,7 +63,8 @@ describe('villain controller', function() {
     });
 
     it('should DELETE villains', function() {
-      $httpBackend.expectDELETE('http://localhost:3000/api/villains/1').respond(200);
+      $httpBackend.expectDELETE('http://localhost:3000/api/villains/1')
+        .respond(200);
       vilctrl.villains = [{ name: 'test villain', _id: 1 }];
       vilctrl.deleteVillain(vilctrl.villains[0]);
       $httpBackend.flush();

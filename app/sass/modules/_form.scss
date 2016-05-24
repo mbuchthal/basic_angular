@@ -1,0 +1,14 @@
+
+form {
+  padding-left: 1em;
+  label {
+    display: inline;
+    float: left;
+    clear: left;
+    width: 8em;
+  }
+  input {
+    display: inline-block;
+    float: left;
+  }
+}

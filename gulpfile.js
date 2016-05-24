@@ -3,28 +3,32 @@ const eslint = require('gulp-eslint');
 const webpack = require('webpack-stream');
 const nodemon = require('gulp-nodemon');
 const livereload = require('gulp-livereload');
+const sass = require('gulp-sass');
+const sourcemaps = require('gulp-sourcemaps');
 const cp = require('child_process');
 const protractor = require('gulp-protractor').protractor;
 const mongoUri = 'mongodb://localhost/test_server';
+const minify = require('gulp-minify-css');
 
 var files = ['server.js', 'gulpfile.js'];
 var appFiles = 'app/**/*.js';
+var testFiles = ['test/e2e/**/*.js', 'test/unit/**/*.js'];
 var children = [];
 
 var nodemonOptions = {
   script: 'server.js',
-  ext: 'html css js',
+  ext: 'html scss js',
   ignore: ['build/'],
-  tasks: ['lint', 'build']
+  tasks: ['build']
 };
 
-gulp.task('default', () => {
-  livereload.listen();
-  nodemon(nodemonOptions).on('restart', () => {
-    gulp.src('server.js')
-      .pipe(livereload());
-    console.log('restarted');
-  });
+gulp.task('sass', function() {
+  return gulp.src('./app/sass/**/*.scss')
+    .pipe(sourcemaps.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(minify())
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./build'));
 });
 
 gulp.task('webpack:dev', ['lint'], () => {
@@ -54,11 +58,6 @@ gulp.task('static:dev', () => {
     .pipe(gulp.dest('./build'));
 });
 
-gulp.task('css:dev', () => {
-  return gulp.src('./app/**/*.css')
-    .pipe(gulp.dest('./build'));
-});
-
 gulp.task('startservers:test', () => {
   children.push(cp.fork('server.js'));
   children.push(cp.spawn('webdriver-manager', ['start']));
@@ -75,6 +74,18 @@ gulp.task('lint:server', () => {
 gulp.task('lint:browser', () => {
   return gulp.src(appFiles)
   .pipe(eslint())
+  .pipe(eslint.format());
+});
+
+gulp.task('lint:test', () => {
+  return gulp.src(testFiles)
+  .pipe(eslint({
+    'env': {
+      'browser': true,
+      'jasmine': true,
+      'protractor': true
+    }
+  }))
   .pipe(eslint.format());
 });
 
@@ -104,8 +115,16 @@ gulp.task('develop', () => {
   });
 });
 
+gulp.task('default', ['build'], () => {
+  livereload.listen();
+  nodemon(nodemonOptions).on('restart', () => {
+    gulp.src('server.js')
+      .pipe(livereload());
+    console.log('restarted');
+  });
+});
 gulp.task('watch', ['lint', 'build:dev', 'develop']);
-gulp.task('lint', ['lint:server', 'lint:browser']);
-gulp.task('build:dev', ['webpack:dev', 'static:dev', 'css:dev']);
+gulp.task('lint', ['lint:server', 'lint:browser', 'lint:test']);
+gulp.task('build:dev', ['webpack:dev', 'static:dev', 'sass']);
 gulp.task('build', ['lint', 'build:dev']);
 gulp.task('server-default', ['startservers:test', 'build']);

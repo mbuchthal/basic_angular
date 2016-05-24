@@ -1,0 +1,21 @@
+
+<form data-ng-submit="save(villain)">
+  <fieldset>
+    <label>Name:</label>
+    <input type="text" data-ng-model="villain.name">
+  </fieldset>
+  <fieldset>
+    <label>Power Level:</label>
+    <input type="text" placeholder="1-10" data-ng-model="villain.powerLevel">
+  </fieldset>
+  <fieldset>
+    <label>Super Powers:</label>
+    <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="villain.superPower">
+  </fieldset>
+  <fieldset>
+    <label>Archnemesis:</label>
+    <input type="text" data-ng-model="villain.dastardlyDoGooder">
+  </fieldset>
+  <button type="submit">{{buttonText}}</button>
+  <ng-transclude></ng-transclude>
+</form>

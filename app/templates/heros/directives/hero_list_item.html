@@ -1,0 +1,11 @@
+
+<li>
+  <ng-transclude></ng-transclude>
+  <p data-ng-if="!hero.editing">
+    <span>{{hero.name}} is a Hero who frequently battles {{hero.archNemesis}} with:
+    <span data-ng-if="!hero.editing" data-ng-repeat="superPower in hero.superPower">{{superPower}}{{$last ? '.' : ', '}}</span></span>
+  </p>
+  <button data-ng-if="!hero.editing" data-ng-click="hero.editing = true; store(hero)">Edit Hero</button>
+  <button data-ng-if="!hero.editing" data-ng-click="remove(hero)">Delete</button>
+</li>
+
