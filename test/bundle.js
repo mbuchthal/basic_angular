@@ -47,13 +47,15 @@
 	
 	__webpack_require__(1);
 	__webpack_require__(26);
+	
+	__webpack_require__(27);
 	__webpack_require__(28);
 	__webpack_require__(29);
-	// require('./hero_form_directive_test');
+	__webpack_require__(30);
 	// require('./hero_item_directive_test');
 	// require('./villain_form_directive_test');
 	// require('./villain_item_directive_test');
-	__webpack_require__(30);
+	__webpack_require__(32);
 
 
 /***/ },
@@ -31379,86 +31381,6 @@
 
 /***/ },
 /* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var angular = __webpack_require__(2);
-	__webpack_require__(27);
-	
-	describe('hero controller', function() {
-	  var $controller;
-	  var $scope;
-	
-	  beforeEach(angular.mock.module('heroApp'));
-	
-	  beforeEach(angular.mock.inject(function(_$controller_, $rootScope) {
-	    $controller = _$controller_;
-	    $scope = $rootScope.$new();
-	  }));
-	
-	  it('should be a controller', function() {
-	    var heroctrl = $controller('HeroController', { $scope });
-	    expect(typeof heroctrl).toBe('object');
-	    expect(typeof heroctrl.getHeroes).toBe('function');
-	  });
-	
-	  describe('REST functionality', function() {
-	    var $httpBackend;
-	    var heroctrl;
-	
-	    beforeEach(angular.mock.inject(function(_$httpBackend_) {
-	      $httpBackend = _$httpBackend_;
-	      heroctrl = $controller('HeroController', { $scope });
-	    }));
-	
-	    afterEach(function() {
-	      $httpBackend.verifyNoOutstandingExpectation();
-	      $httpBackend.verifyNoOutstandingRequest();
-	    });
-	
-	    it('should send GET request for heroes', function() {
-	      $httpBackend.expectGET('http://localhost:3000/api/heroes')
-	        .respond(200, [{ name: 'test hero' }]);
-	      heroctrl.getHeroes();
-	      $httpBackend.flush();
-	      expect(heroctrl.heroes.length).toBe(1);
-	      expect(heroctrl.heroes[0].name).toBe('test hero');
-	    });
-	
-	    it('should send POST request for heroes', function() {
-	      $httpBackend.expectPOST('http://localhost:3000/api/heroes',
-	        { name: 'test hero' }).respond(200, { name: 'other hero' });
-	      expect(heroctrl.heroes.length).toBe(0);
-	      heroctrl.newHero = { name: 'test hero' };
-	      heroctrl.makeHero();
-	      $httpBackend.flush();
-	      expect(heroctrl.heroes[0].name).toBe('other hero');
-	      expect(heroctrl.newHero).toBe(null);
-	    });
-	
-	    it('should update heroes on PUT', function() {
-	      $httpBackend.expectPUT('http://localhost:3000/api/heroes/1',
-	        { name: 'update hero', editing: true, _id: 1 }).respond(200);
-	      heroctrl.heroes = [{ name: 'test hero', editing: true, _id: 1 }];
-	      heroctrl.heroes[0].name = 'update hero';
-	      heroctrl.editHero(heroctrl.heroes[0]);
-	      $httpBackend.flush();
-	      expect(heroctrl.heroes[0].editing).toBe(false);
-	    });
-	
-	    it('should DELETE heroes', function() {
-	      $httpBackend.expectDELETE('http://localhost:3000/api/heroes/1')
-	        .respond(200);
-	      heroctrl.heroes = [{ name: 'test hero', _id: 1 }];
-	      heroctrl.deleteHero(heroctrl.heroes[0]);
-	      $httpBackend.flush();
-	      expect(heroctrl.heroes.length).toBe(0);
-	    });
-	  });
-	});
-
-
-/***/ },
-/* 27 */
 /***/ function(module, exports) {
 
 	/**
@@ -34470,11 +34392,91 @@
 
 
 /***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var angular = __webpack_require__(2);
+	__webpack_require__(26);
+	
+	describe('hero controller', function() {
+	  var $controller;
+	  var $scope;
+	
+	  beforeEach(angular.mock.module('heroApp'));
+	
+	  beforeEach(angular.mock.inject(function(_$controller_, $rootScope) {
+	    $controller = _$controller_;
+	    $scope = $rootScope.$new();
+	  }));
+	
+	  it('should be a controller', function() {
+	    var heroctrl = $controller('HeroController', { $scope });
+	    expect(typeof heroctrl).toBe('object');
+	    expect(typeof heroctrl.getHeroes).toBe('function');
+	  });
+	
+	  describe('REST functionality', function() {
+	    var $httpBackend;
+	    var heroctrl;
+	
+	    beforeEach(angular.mock.inject(function(_$httpBackend_) {
+	      $httpBackend = _$httpBackend_;
+	      heroctrl = $controller('HeroController', { $scope });
+	    }));
+	
+	    afterEach(function() {
+	      $httpBackend.verifyNoOutstandingExpectation();
+	      $httpBackend.verifyNoOutstandingRequest();
+	    });
+	
+	    it('should send GET request for heroes', function() {
+	      $httpBackend.expectGET('http://localhost:3000/api/heroes')
+	        .respond(200, [{ name: 'test hero' }]);
+	      heroctrl.getHeroes();
+	      $httpBackend.flush();
+	      expect(heroctrl.heroes.length).toBe(1);
+	      expect(heroctrl.heroes[0].name).toBe('test hero');
+	    });
+	
+	    it('should send POST request for heroes', function() {
+	      $httpBackend.expectPOST('http://localhost:3000/api/heroes',
+	        { name: 'test hero' }).respond(200, { name: 'other hero' });
+	      expect(heroctrl.heroes.length).toBe(0);
+	      heroctrl.newHero = { name: 'test hero' };
+	      heroctrl.makeHero();
+	      $httpBackend.flush();
+	      expect(heroctrl.heroes[0].name).toBe('other hero');
+	      expect(heroctrl.newHero).toBe(null);
+	    });
+	
+	    it('should update heroes on PUT', function() {
+	      $httpBackend.expectPUT('http://localhost:3000/api/heroes/1',
+	        { name: 'update hero', editing: true, _id: 1 }).respond(200);
+	      heroctrl.heroes = [{ name: 'test hero', editing: true, _id: 1 }];
+	      heroctrl.heroes[0].name = 'update hero';
+	      heroctrl.editHero(heroctrl.heroes[0]);
+	      $httpBackend.flush();
+	      expect(heroctrl.heroes[0].editing).toBe(false);
+	    });
+	
+	    it('should DELETE heroes', function() {
+	      $httpBackend.expectDELETE('http://localhost:3000/api/heroes/1')
+	        .respond(200);
+	      heroctrl.heroes = [{ name: 'test hero', _id: 1 }];
+	      heroctrl.deleteHero(heroctrl.heroes[0]);
+	      $httpBackend.flush();
+	      expect(heroctrl.heroes.length).toBe(0);
+	    });
+	  });
+	});
+
+
+/***/ },
 /* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var angular = __webpack_require__(2);
-	__webpack_require__(27);
+	__webpack_require__(26);
 	
 	describe('villain controller', function() {
 	  var $controller;
@@ -34554,7 +34556,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var angular = __webpack_require__(2);
-	__webpack_require__(27);
+	__webpack_require__(26);
 	
 	describe('battle controller', function() {
 	  var $controller;
@@ -34601,7 +34603,55 @@
 
 	
 	const angular = __webpack_require__(2);
-	__webpack_require__(27);
+	const heroFormTemplate = __webpack_require__(31);
+	
+	describe('hero form directive', function() {
+	  beforeEach(angular.mock.module('heroApp'));
+	  var $httpBackend;
+	  var $compile;
+	  var $scope;
+	  var $rootScope;
+	  var $controller;
+	
+	  beforeEach(angular.mock.inject(function(_$httpBackend_, _$compile_, _$rootScope_) {
+	    $httpBackend = _$httpBackend_;
+	    $compile = _$compile_;
+	    $rootScope = _$rootScope_;
+	    $scope = $rootScope.$new();
+	  }));
+	
+	    it('should create a form directive with a controller binding', function() {
+	
+	      $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
+	        .respond(200, heroFormTemplate);
+	
+	      $scope.name = 'test name';
+	      var directive = $compile('<div data-ng-controller="HeroController as heroctrl"> <hero-form data-hero="name"></hero-form> </div>')($scope);
+	      $httpBackend.flush();
+	      $scope.$digest();
+	      // var el = directive.find('p');
+	      // expect(el.text()).toContain($scope.name);
+	      var input = directive.find('form input');
+	      input.val('new test name');
+	      input.triggerHandler('form');
+	      expect(directive.html).toContain('new test name');
+	
+	  });
+	});
+
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	module.exports = "\n<form id=\"hero_form\" data-ng-submit=\"save(hero)\">\n  <fieldset>\n    <label for=\"name\">Name:</label>\n    <input id=\"flibbity\" type=\"text\" name=\"name\" data-ng-model=\"hero.name\">\n  </fieldset>\n  <fieldset>\n    <label for=\"powerLevel\">Power Level:</label>\n    <input type=\"text\" name=\"powerLevel\" placeholder=\"1-10\" data-ng-model=\"hero.powerLevel\">\n  </fieldset>\n  <fieldset>\n    <label for=\"superPower\">Super Powers:</label>\n    <input data-ng-list type=\"text\" name=\"superPower\" placeholder=\"power1, power2, power3\" data-ng-model=\"hero.superPower\">\n  </fieldset>\n  <fieldset>\n    <label for=\"archNemesis\">Archnemesis:</label>\n    <input type=\"text\" name=\"archNemesis\" data-ng-model=\"hero.archNemesis\">\n  </fieldset>\n  <button type=\"submit\">{{buttonText}}</button>\n  <ng-transclude></ng-transclude>\n</form>\n";
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	const angular = __webpack_require__(2);
 	
 	describe('handle error service', function() {
 	
