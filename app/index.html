@@ -7,64 +7,64 @@
   <link rel="stylesheet" href="main.css">
 </head>
 <body data-ng-app="heroApp">
-  <header>
-    <h1><span>Heros</span> vs. <span>Villains</span></h1>
-    <p>An Angular.js Demo</p>
-  </header>
+  <div class="background">
+    <header>
+      <h1><span>Heros</span> vs. <span>Villains</span></h1>
+      <p>An Angular.js Demo</p>
+    </header>
 
-<div class="create_new">
-  <section class="heroes" data-ng-controller="HeroController as heroctrl" data-ng-init="heroctrl.getHeroes()">
-    <h2>Heroes:</h2>
-    <hero-form
-      data-button-text="Make Hero"
-      data-save-method="create"
-      data-hero="heroctrl.newHero">
-    </hero-form>
-
-    <ul id="herolist">
-      <hero-list-item data-ng-repeat="hero in heroctrl.heroes" data-hero="hero">
+    <div class="create_new">
+      <section class="heroes" data-ng-controller="HeroController as heroctrl" data-ng-init="heroctrl.getHeroes()">
+        <h2>Heroes:</h2>
         <hero-form
-          data-ng-if="hero.editing"
-          data-button-text="Update Hero"
-          data-save-method="update"
-          data-hero="hero">
-          <button data-ng-click="hero.editing = false; heroctrl.heroReset(hero)">Cancel</button>
+          data-button-text="Make Hero"
+          data-save-method="create"
+          data-hero="heroctrl.newHero">
         </hero-form>
-      </hero-list-item>
-    </ul>
-  </section>
 
+        <ul id="herolist">
+          <hero-list-item data-ng-repeat="hero in heroctrl.heroes" data-hero="hero">
+            <hero-form
+              data-ng-if="hero.editing"
+              data-button-text="Update Hero"
+              data-save-method="update"
+              data-hero="hero">
+              <button data-ng-click="hero.editing = false; heroctrl.heroReset(hero)">Cancel</button>
+            </hero-form>
+          </hero-list-item>
+        </ul>
+      </section>
 
-  <section class="villains" data-ng-controller="VillainController as vilctrl" data-ng-init="vilctrl.getVillains()">
-    <h2>Villains:</h2>
-    <villain-form
-      data-button-text="Make Villain"
-      data-save-method="create"
-      data-villain="vilctrl.newVillain">
-    </villain-form>
-
-    <ul id="villainlist">
-      <villain-list-item data-ng-repeat="villain in vilctrl.villains" data-villain="villain">
+      <section class="villains" data-ng-controller="VillainController as vilctrl" data-ng-init="vilctrl.getVillains()">
+        <h2>Villains:</h2>
         <villain-form
-          data-ng-if="villain.editing"
-          data-button-text="Edit Villain"
-          data-save-method="update"
-          data-villain="villain">
-          <button data-ng-click="villain.editing = false; vilctrl.vilReset(villain)">Cancel</button>
+          data-button-text="Make Villain"
+          data-save-method="create"
+          data-villain="vilctrl.newVillain">
         </villain-form>
-      </villain-list-item>
-    </ul>
-  </section>
-</div>
+
+        <ul id="villainlist">
+          <villain-list-item data-ng-repeat="villain in vilctrl.villains" data-villain="villain">
+            <villain-form
+              data-ng-if="villain.editing"
+              data-button-text="Edit Villain"
+              data-save-method="update"
+              data-villain="villain">
+              <button data-ng-click="villain.editing = false; vilctrl.vilReset(villain)">Cancel</button>
+            </villain-form>
+          </villain-list-item>
+        </ul>
+      </section>
+    </div>
 
   <section class="battles" data-ng-controller="BattleController as battlectrl">
     <h2>Battle!</h2>
-    <button data-ng-click="battlectrl.battle()">Battle Button!</button>
+    <button id="battle_btn" data-ng-click="battlectrl.battle()">Battle Button!</button>
     <ul id="battlelist">
       <battle-list data-ng-repeat="battle in battlectrl.battles" data-battle="battle"></battle-list>
     </ul>
   </section>
-
+</div>
   <script src="./bundle.js"></script>
 </body>
 </html>

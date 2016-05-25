@@ -1,5 +1,5 @@
 
-form {
+#hero_form {
   padding-left: 1em;
   label {
     display: inline;
@@ -10,5 +10,21 @@ form {
   input {
     display: inline-block;
     float: left;
+  }
+}
+
+#villain_form {
+  padding-right: 1em;
+  label {
+    display: inline;
+    float: right;
+    clear: right;
+    width: 8em;
+    margin-left: 3em;
+    text-align: right;
+  }
+  input {
+    display: inline-block;
+    float: right;
   }
 }

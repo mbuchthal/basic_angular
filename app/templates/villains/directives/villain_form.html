@@ -1,5 +1,5 @@
 
-<form data-ng-submit="save(villain)">
+<form id="villain_form" data-ng-submit="save(villain)">
   <fieldset>
     <label>Name:</label>
     <input type="text" data-ng-model="villain.name">
@@ -16,6 +16,6 @@
     <label>Archnemesis:</label>
     <input type="text" data-ng-model="villain.dastardlyDoGooder">
   </fieldset>
-  <button type="submit">{{buttonText}}</button>
+  <button id="make_villain_btn" type="submit">{{buttonText}}</button>
   <ng-transclude></ng-transclude>
 </form>
