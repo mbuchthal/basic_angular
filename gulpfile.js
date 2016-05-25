@@ -9,6 +9,7 @@ const cp = require('child_process');
 const protractor = require('gulp-protractor').protractor;
 const mongoUri = 'mongodb://localhost/test_server';
 const minify = require('gulp-minify-css');
+const html = require('html-loader');
 
 var files = ['server.js', 'gulpfile.js'];
 var appFiles = 'app/**/*.js';
@@ -48,6 +49,14 @@ gulp.task('webpack:test', () => {
       devtool: 'source-map',
       output: {
         filename: 'bundle.js'
+      },
+      module: {
+        loaders: [
+          {
+            test: /\.html$/,
+            loader: 'html'
+          }
+        ]
       }
     }))
     .pipe(gulp.dest('./test'));

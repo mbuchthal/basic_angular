@@ -47,7 +47,7 @@
           <villain-list-item data-ng-repeat="villain in vilctrl.villains" data-villain="villain">
             <villain-form
               data-ng-if="villain.editing"
-              data-button-text="Edit Villain"
+              data-button-text="Update Villain"
               data-save-method="update"
               data-villain="villain">
               <button data-ng-click="villain.editing = false; vilctrl.vilReset(villain)">Cancel</button>

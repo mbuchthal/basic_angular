@@ -1,40 +1,42 @@
 
-var handleError = require('../../lib').handleError;
 var baseUrl = require('../../config').baseUrl;
 
 module.exports = function(app) {
-  app.controller('HeroController', ['$http', '$scope', function($http, $scope) {
+  app.controller('HeroController',
+  ['$http', '$scope', 'handleError',
+  function($http, $scope, handleError) {
     this.heroes = [];
+    this.errors = [];
     $scope.master = {};
 
     this.getHeroes = function() {
       $http.get(baseUrl + '/api/heroes')
         .then((res) => {
           this.heroes = res.data;
-        }, handleError.bind(this));
+        }, handleError(this.errors, 'could not GET heroes'));
     };
 
-    this.makeHero = () => {
+    this.makeHero = function() {
       $http.post(baseUrl + '/api/heroes', this.newHero)
         .then((res) => {
           this.heroes.push(res.data);
           this.newHero = null;
-        }, handleError.bind(this));
-    };
+        }, handleError(this.errors, 'could not POST heroes'));
+    }.bind(this);
 
-    this.deleteHero = (hero) => {
+    this.deleteHero = function(hero) {
       $http.delete(baseUrl + '/api/heroes/' + hero._id)
         .then(() => {
           this.heroes.splice(this.heroes.indexOf(hero), 1);
-        }, handleError.bind(this));
-    };
+        }, handleError(this.errors, 'could not DELETE heroes'));
+    }.bind(this);
 
-    this.editHero = (hero) => {
+    this.editHero = function(hero) {
       $http.put(baseUrl + '/api/heroes/' + hero._id, hero)
         .then(() => {
           $scope.master = angular.copy(hero);
           hero.editing = false;
-        }, handleError.bind(this));
+        }, handleError(this.errors, 'could not UPDATE heroes'));
     };
 
     this.heroStore = (hero) => {

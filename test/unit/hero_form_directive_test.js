@@ -1,6 +1,6 @@
 
 const angular = require('angular');
-const heroFormTemplate = require('../../app/templates/directives/hero_form.html');
+const heroFormTemplate = require('../../app/templates/heros/directives/hero_form.html');
 
 describe('hero form directive', function() {
   beforeEach(angular.mock.module('heroApp'));
@@ -17,19 +17,19 @@ describe('hero form directive', function() {
   }));
 
   it('should create a form directive with a controller binding', function() {
-    $httpBackend.expectGET('/templates/heros/directives/hero_list_item.html')
+    $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
       .respond(200, heroFormTemplate);
 
-    $scope.hero.name = 'test name';
-    var link = $compile('<div data-hero-form data></div>');
+    $scope.name = 'test name';
+    var link = $compile('<div data-hero-form hero.name="test" data></div>');
     var directive = link($scope);
     $httpBackend.flush();
     $scope.$digest();
-    var el = directive.find('');
-    expect(el.text()).toEqual($scope.name);
+    var el = directive.find('.hero_data');
+    expect(el.text()).toContain($scope.name);
     var input = directive.find('input');
     input.val('new test name');
     input.triggerHandler('input');
-    expect($scope.hero.name).toEqual('some test name');
+    expect($scope.name).toEqual('some test name');
   });
 });

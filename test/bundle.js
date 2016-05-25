@@ -44,10 +44,16 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	
 	__webpack_require__(1);
-	__webpack_require__(22);
-	__webpack_require__(24);
-	__webpack_require__(25);
+	__webpack_require__(26);
+	__webpack_require__(28);
+	__webpack_require__(29);
+	// require('./hero_form_directive_test');
+	// require('./hero_item_directive_test');
+	// require('./villain_form_directive_test');
+	// require('./villain_item_directive_test');
+	__webpack_require__(30);
 
 
 /***/ },
@@ -59,6 +65,7 @@
 	const heroApp = angular.module('heroApp', []);
 	
 	__webpack_require__(4)(heroApp);
+	__webpack_require__(6)(heroApp);
 	__webpack_require__(13)(heroApp);
 	__webpack_require__(19)(heroApp);
 
@@ -30951,17 +30958,25 @@
 	
 	module.exports = function(app) {
 	  __webpack_require__(5)(app);
-	  __webpack_require__(10)(app);
 	};
 
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	
 	module.exports = function(app) {
-	  __webpack_require__(6)(app);
+	  app.factory('handleError', function() {
+	    return function(errArr, message) {
+	      return function(err) {
+	        console.log(err);
+	        if (Array.isArray(errArr)) {
+	          errArr.push(new Error(message || 'server error'));
+	        }
+	      };
+	    };
+	  });
 	};
 
 
@@ -30970,42 +30985,65 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var handleError = __webpack_require__(7).handleError;
+	module.exports = function(app) {
+	  __webpack_require__(7)(app);
+	  __webpack_require__(10)(app);
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	module.exports = function(app) {
+	  __webpack_require__(8)(app);
+	};
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
 	var baseUrl = __webpack_require__(9).baseUrl;
 	
 	module.exports = function(app) {
-	  app.controller('HeroController', ['$http', '$scope', function($http, $scope) {
+	  app.controller('HeroController',
+	  ['$http', '$scope', 'handleError',
+	  function($http, $scope, handleError) {
 	    this.heroes = [];
+	    this.errors = [];
 	    $scope.master = {};
 	
 	    this.getHeroes = function() {
 	      $http.get(baseUrl + '/api/heroes')
 	        .then((res) => {
 	          this.heroes = res.data;
-	        }, handleError.bind(this));
+	        }, handleError(this.errors, 'could not GET heroes'));
 	    };
 	
-	    this.makeHero = () => {
+	    this.makeHero = function() {
 	      $http.post(baseUrl + '/api/heroes', this.newHero)
 	        .then((res) => {
 	          this.heroes.push(res.data);
 	          this.newHero = null;
-	        }, handleError.bind(this));
-	    };
+	        }, handleError(this.errors, 'could not POST heroes'));
+	    }.bind(this);
 	
-	    this.deleteHero = (hero) => {
+	    this.deleteHero = function(hero) {
 	      $http.delete(baseUrl + '/api/heroes/' + hero._id)
 	        .then(() => {
 	          this.heroes.splice(this.heroes.indexOf(hero), 1);
-	        }, handleError.bind(this));
-	    };
+	        }, handleError(this.errors, 'could not DELETE heroes'));
+	    }.bind(this);
 	
-	    this.editHero = (hero) => {
+	    this.editHero = function(hero) {
 	      $http.put(baseUrl + '/api/heroes/' + hero._id, hero)
 	        .then(() => {
 	          $scope.master = angular.copy(hero);
 	          hero.editing = false;
-	        }, handleError.bind(this));
+	        }, handleError(this.errors, 'could not UPDATE heroes'));
 	    };
 	
 	    this.heroStore = (hero) => {
@@ -31017,27 +31055,6 @@
 	      angular.copy($scope.master, oldHero);
 	    };
 	  }]);
-	};
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	module.exports = {
-	  handleError: __webpack_require__(8)
-	};
-
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	
-	module.exports = function(err) {
-	  console.log(err);
-	  this.errors = (this.errors || []).push(err);
 	};
 
 
@@ -31141,42 +31158,43 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var handleError = __webpack_require__(7).handleError;
 	var baseUrl = __webpack_require__(9).baseUrl;
 	
 	module.exports = function(app) {
-	  app.controller('VillainController', ['$http', '$scope', function($http, $scope) {
+	  app.controller('VillainController',
+	  ['$http', '$scope', 'handleError',
+	  function($http, $scope, handleError) {
 	    this.villains = [];
 	    $scope.master = {};
 	
-	    this.getVillains = () => {
+	    this.getVillains = function() {
 	      $http.get(baseUrl + '/api/villains')
 	        .then((res) => {
 	          this.villains = res.data;
-	        }, handleError.bind(this));
-	    };
+	        }, handleError(this.errors, 'could not GET villains'));
+	    }.bind(this);
 	
-	    this.makeVillain = () => {
+	    this.makeVillain = function() {
 	      $http.post(baseUrl + '/api/villains', this.newVillain)
 	        .then((res) => {
 	          this.villains.push(res.data);
 	          this.newVillain = null;
-	        }, handleError.bind(this));
-	    };
+	        }, handleError(this.errors, 'could not POST villains'));
+	    }.bind(this);
 	
-	    this.deleteVillain = (villain) => {
+	    this.deleteVillain = function(villain) {
 	      $http.delete(baseUrl + '/api/villains/' + villain._id)
 	        .then(() => {
 	          this.villains.splice(this.villains.indexOf(villain), 1);
-	        }, handleError.bind(this));
-	    };
+	        }, handleError(this.errors, 'could not DELETE villains'));
+	    }.bind(this);
 	
-	    this.editVillain = (villain) => {
+	    this.editVillain = function(villain) {
 	      $http.put(baseUrl + '/api/villains/' + villain._id, villain)
 	        .then(() => {
 	          villain.editing = false;
-	        }, handleError.bind(this));
-	    };
+	        }, handleError(this.errors, 'could not UPDATE villains'));
+	    }.bind(this);
 	
 	    this.vilStore = (villain) => {
 	      $scope.master = angular.copy(villain);
@@ -31263,6 +31281,7 @@
 	
 	module.exports = function(app) {
 	  __webpack_require__(20)(app);
+	  __webpack_require__(24)(app);
 	};
 
 
@@ -31282,6 +31301,7 @@
 
 	
 	var baseUrl = __webpack_require__(9).baseUrl;
+	var handleError = __webpack_require__(22).handleError;
 	
 	module.exports = function(app) {
 	  app.controller('BattleController', ['$http', function($http) {
@@ -31291,7 +31311,11 @@
 	      $http.get(baseUrl + '/api/battle')
 	        .then((res) => {
 	          this.battles.push(res.data);
-	        });
+	        }, handleError.bind(this));
+	    };
+	
+	    this.removeBattle = (battle) => {
+	      this.battles.splice(this.battles.indexOf(battle), 1);
 	    };
 	  }]);
 	};
@@ -31301,8 +31325,64 @@
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
+	
+	module.exports = {
+	  handleError: __webpack_require__(23)
+	};
+
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	
+	module.exports = function(err) {
+	  console.log(err);
+	  this.errors = (this.errors || []).push(err);
+	};
+
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	module.exports = function(app) {
+	  __webpack_require__(25)(app);
+	};
+
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+	
+	module.exports = function(app) {
+	  app.directive('battleList', function() {
+	    return {
+	      restrict: 'EAC',
+	      replace: true,
+	      require: '^ngController',
+	      transclude: true,
+	      templateUrl: '/templates/battles/directives/battle_list.html',
+	      scope: {
+	        battle: '='
+	      },
+	      link: function(scope, element, attrs, controller) {
+	        scope.remove = controller.removeBattle;
+	        scope.battle = controller.battle;
+	      }
+	    };
+	  });
+	};
+
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var angular = __webpack_require__(2);
-	__webpack_require__(23);
+	__webpack_require__(27);
 	
 	describe('hero controller', function() {
 	  var $controller;
@@ -31316,7 +31396,7 @@
 	  }));
 	
 	  it('should be a controller', function() {
-	    var heroctrl = $controller('HeroController', {$scope});
+	    var heroctrl = $controller('HeroController', { $scope });
 	    expect(typeof heroctrl).toBe('object');
 	    expect(typeof heroctrl.getHeroes).toBe('function');
 	  });
@@ -31327,7 +31407,7 @@
 	
 	    beforeEach(angular.mock.inject(function(_$httpBackend_) {
 	      $httpBackend = _$httpBackend_;
-	      heroctrl = $controller('HeroController', {$scope});
+	      heroctrl = $controller('HeroController', { $scope });
 	    }));
 	
 	    afterEach(function() {
@@ -31336,7 +31416,8 @@
 	    });
 	
 	    it('should send GET request for heroes', function() {
-	      $httpBackend.expectGET('http://localhost:3000/api/heroes').respond(200, [{ name: 'test hero' }]);
+	      $httpBackend.expectGET('http://localhost:3000/api/heroes')
+	        .respond(200, [{ name: 'test hero' }]);
 	      heroctrl.getHeroes();
 	      $httpBackend.flush();
 	      expect(heroctrl.heroes.length).toBe(1);
@@ -31344,7 +31425,8 @@
 	    });
 	
 	    it('should send POST request for heroes', function() {
-	      $httpBackend.expectPOST('http://localhost:3000/api/heroes', { name: 'test hero' }).respond(200, { name: 'other hero' });
+	      $httpBackend.expectPOST('http://localhost:3000/api/heroes',
+	        { name: 'test hero' }).respond(200, { name: 'other hero' });
 	      expect(heroctrl.heroes.length).toBe(0);
 	      heroctrl.newHero = { name: 'test hero' };
 	      heroctrl.makeHero();
@@ -31354,7 +31436,8 @@
 	    });
 	
 	    it('should update heroes on PUT', function() {
-	      $httpBackend.expectPUT('http://localhost:3000/api/heroes/1', { name: 'update hero', editing: true, _id: 1 }).respond(200);
+	      $httpBackend.expectPUT('http://localhost:3000/api/heroes/1',
+	        { name: 'update hero', editing: true, _id: 1 }).respond(200);
 	      heroctrl.heroes = [{ name: 'test hero', editing: true, _id: 1 }];
 	      heroctrl.heroes[0].name = 'update hero';
 	      heroctrl.editHero(heroctrl.heroes[0]);
@@ -31363,7 +31446,8 @@
 	    });
 	
 	    it('should DELETE heroes', function() {
-	      $httpBackend.expectDELETE('http://localhost:3000/api/heroes/1').respond(200);
+	      $httpBackend.expectDELETE('http://localhost:3000/api/heroes/1')
+	        .respond(200);
 	      heroctrl.heroes = [{ name: 'test hero', _id: 1 }];
 	      heroctrl.deleteHero(heroctrl.heroes[0]);
 	      $httpBackend.flush();
@@ -31374,7 +31458,7 @@
 
 
 /***/ },
-/* 23 */
+/* 27 */
 /***/ function(module, exports) {
 
 	/**
@@ -34386,11 +34470,11 @@
 
 
 /***/ },
-/* 24 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var angular = __webpack_require__(2);
-	__webpack_require__(23);
+	__webpack_require__(27);
 	
 	describe('villain controller', function() {
 	  var $controller;
@@ -34404,7 +34488,7 @@
 	  }));
 	
 	  it('should be a controller', function() {
-	    var vilctrl = $controller('VillainController', {$scope});
+	    var vilctrl = $controller('VillainController', { $scope });
 	    expect(typeof vilctrl).toBe('object');
 	    expect(typeof vilctrl.getVillains).toBe('function');
 	  });
@@ -34415,7 +34499,7 @@
 	
 	    beforeEach(angular.mock.inject(function(_$httpBackend_) {
 	      $httpBackend = _$httpBackend_;
-	      vilctrl = $controller('VillainController', {$scope});
+	      vilctrl = $controller('VillainController', { $scope });
 	    }));
 	
 	    afterEach(function() {
@@ -34424,7 +34508,8 @@
 	    });
 	
 	    it('should send GET request for villains', function() {
-	      $httpBackend.expectGET('http://localhost:3000/api/villains').respond(200, [{ name: 'test villain' }]);
+	      $httpBackend.expectGET('http://localhost:3000/api/villains')
+	        .respond(200, [{ name: 'test villain' }]);
 	      vilctrl.getVillains();
 	      $httpBackend.flush();
 	      expect(vilctrl.villains.length).toBe(1);
@@ -34432,7 +34517,8 @@
 	    });
 	
 	    it('should send POST request for villains', function() {
-	      $httpBackend.expectPOST('http://localhost:3000/api/villains', { name: 'test villain' }).respond(200, { name: 'other villain' });
+	      $httpBackend.expectPOST('http://localhost:3000/api/villains',
+	        { name: 'test villain' }).respond(200, { name: 'other villain' });
 	      expect(vilctrl.villains.length).toBe(0);
 	      vilctrl.newVillain = { name: 'test villain' };
 	      vilctrl.makeVillain();
@@ -34442,7 +34528,8 @@
 	    });
 	
 	    it('should update villains on PUT', function() {
-	      $httpBackend.expectPUT('http://localhost:3000/api/villains/1', { name: 'update villain', editing: true, _id: 1 }).respond(200);
+	      $httpBackend.expectPUT('http://localhost:3000/api/villains/1',
+	        { name: 'update villain', editing: true, _id: 1 }).respond(200);
 	      vilctrl.villains = [{ name: 'test villain', editing: true, _id: 1 }];
 	      vilctrl.villains[0].name = 'update villain';
 	      vilctrl.editVillain(vilctrl.villains[0]);
@@ -34451,7 +34538,8 @@
 	    });
 	
 	    it('should DELETE villains', function() {
-	      $httpBackend.expectDELETE('http://localhost:3000/api/villains/1').respond(200);
+	      $httpBackend.expectDELETE('http://localhost:3000/api/villains/1')
+	        .respond(200);
 	      vilctrl.villains = [{ name: 'test villain', _id: 1 }];
 	      vilctrl.deleteVillain(vilctrl.villains[0]);
 	      $httpBackend.flush();
@@ -34462,11 +34550,11 @@
 
 
 /***/ },
-/* 25 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var angular = __webpack_require__(2);
-	__webpack_require__(23);
+	__webpack_require__(27);
 	
 	describe('battle controller', function() {
 	  var $controller;
@@ -34504,6 +34592,34 @@
 	      expect(battlectrl.battles.length).toBe(1);
 	    });
 	  });
+	});
+
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	const angular = __webpack_require__(2);
+	__webpack_require__(27);
+	
+	describe('handle error service', function() {
+	
+	  beforeEach(angular.mock.module('heroApp'));
+	
+	  it('should return a function', angular.mock.inject(function(handleError) {
+	    expect(typeof handleError).toBe('function');
+	  }));
+	
+	  it('should add an error to the error array', angular.mock.inject(function(handleError) {
+	
+	    var testArr = [];
+	    handleError(testArr, 'test message')();
+	
+	    expect(testArr.length).toBe(1);
+	    expect(testArr[0] instanceof Error).toBe(true);
+	    expect(testArr[0].message).toBe('test message');
+	  }));
 	});
 
 
