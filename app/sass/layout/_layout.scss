@@ -1,52 +1,76 @@
 
 html {
-  min-height: 100%;
+	min-height: 100%;
 }
 body {
-  font-family: $font-main;
-  background-image:
-  radial-gradient(
-    #EED2EE,
-    #39C
-  );
-  background-repeat: no-repeat;
-  ::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 50%;
-    width: 50%;
-    height: 100%;
-    z-index: -1;
-    background-image:
-      radial-gradient(
-      circle at center left,
-      #EED2EE,
-      #F00
-    );
-  }
+	font-family: $font-main;
+}
+
+.background {
+	&:before {
+		content: '';
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 50%;
+		height: 100%;
+		z-index: -1;
+		background-image:
+		radial-gradient(
+			circle at center right,
+			#EED2EE,
+			#39C
+		);
+	}
+	background-repeat: no-repeat;
+	&:after {
+		content: '';
+		position: fixed;
+		top: 0;
+		left: 50%;
+		width: 50%;
+		height: 100%;
+		z-index: -1;
+		background-image:
+			radial-gradient(
+			circle at center left,
+			#EED2EE,
+			#F00
+		);
+	}
 }
 
 h1 {
-  text-align: center;
+	text-align: center;
 }
 
 h2 {
-  font-size: 1em;
-  padding: 0 1em;
-  text-align: center;
+	font-size: 1em;
+	padding: 0 1em;
+	text-align: center;
 }
 
-ul {
-  @include flexbox(left, left, row);
-}
 li {
-  justify-content: space-between;
-  list-style: none;
-  padding: 1em;
+	list-style: none;
+	padding: 1em;
+	p {
+		padding-bottom: 0.5em;
+	}
 }
 
-button {
-  border-radius: 6em;
-  background-color: lightcyan;
+fieldset {
+	padding: 0.5em 0;
+}
+
+input {
+	width: 17em;
+}
+
+.battles {
+	text-align: center;
+	padding: 1em 0 1em;
+}
+
+.villains {
+	float: right;
 }

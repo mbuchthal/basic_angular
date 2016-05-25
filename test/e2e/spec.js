@@ -53,7 +53,7 @@ describe('hero app', function() {
 
     liItem.element(by.buttonText('Edit Villain')).click();
     liItem.element(by.model('villain.name')).clear().sendKeys('test 2');
-    liItem.element(by.buttonText('Edit Villain')).click();
+    liItem.element(by.buttonText('Update Villain')).click();
     element(by.css('span')).getText().then(function(text) {
       expect(text).toContain('test 2');
     });
