@@ -29,9 +29,16 @@ describe('hero form directive', function() {
       // var el = directive.find('p');
       // expect(el.text()).toContain($scope.name);
       var input = directive.find('form input');
+      console.log(input);
       input.val('new test name');
       input.triggerHandler('form');
-      expect(directive.html).toContain('new test name');
+      expect(directive.html()).toContain('new test name');
+
+  });
+
+  it('should transclude html', function() {
+      $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
+      .respond(200, heroFormTemplate);
 
   });
 });
