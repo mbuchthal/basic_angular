@@ -1,5 +1,5 @@
-test/bundle.js
-test/bundle.js.map
+**/*bundle.js
+**/*bundle.js.map
 db/**
 build/**/**
 node_modules
