@@ -12,7 +12,6 @@ module.exports = function(app) {
         battle: '='
       },
       link: function(scope, element, attrs, controller) {
-        scope.battle = controller.battle;
         scope.remove = controller.removeBattle;
       }
     };

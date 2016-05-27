@@ -3,10 +3,10 @@ var baseUrl = require('../../config').baseUrl;
 
 module.exports = function(app) {
   app.controller('HeroController',
-  ['$scope', 'Resource', function($scope, Resource) {
+  ['Resource', function(Resource) {
     this.heroes = [];
     this.errors = [];
-    $scope.master = {};
+    this.master = {};
 
     var heroErrMessages = {
       getAll: 'could not GET heroes',
@@ -15,35 +15,35 @@ module.exports = function(app) {
       remove: 'could not DELETE heroes'
     };
 
-    var remote = new Resource(this.heroes, this.errors,
+    this.remote = new Resource(this.heroes, this.errors,
       baseUrl + '/api/heroes', { errorMsg: heroErrMessages });
 
-    this.getHeroes = remote.getAll.bind(remote);
+    this.getHeroes = this.remote.getAll.bind(this.remote);
 
     this.makeHero = function() {
-      remote.create(this.newHero)
+      this.remote.create(this.newHero)
         .then(() => {
           this.newHero = null;
         });
     }.bind(this);
 
-    this.deleteHero = remote.remove.bind(remote);
+    this.deleteHero = this.remote.remove.bind(this.remote);
 
     this.editHero = function(hero) {
-      remote.update(hero)
+      this.remote.update(hero)
         .then(() => {
           hero.editing = false;
-          $scope.master = angular.copy(hero);
+          this.master = angular.copy(hero);
         });
-    };
+    }.bind(this);
 
-    this.heroStore = (hero) => {
-      $scope.master = angular.copy(hero);
-    };
+    this.heroStore = function(hero) {
+      this.master = angular.copy(hero);
+    }.bind(this);
 
-    this.heroReset = (hero) => {
+    this.heroReset = function(hero) {
       var oldHero = this.heroes[this.heroes.indexOf(hero)];
-      angular.copy($scope.master, oldHero);
-    };
+      angular.copy(this.master, oldHero);
+    }.bind(this);
   }]);
 };

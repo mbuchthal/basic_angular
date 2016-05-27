@@ -69,7 +69,7 @@ describe('hero controller', function() {
       heroctrl.heroes = [testHero];
       heroctrl.deleteHero(testHero);
       $httpBackend.flush();
-      // expect(heroctrl.heroes.length).toBe(0);
+      expect(heroctrl.remote.data.length).toBe(0);
     });
   });
 });

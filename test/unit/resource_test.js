@@ -22,10 +22,10 @@ describe('resource service', function() {
   }))
 
   it('should have post functionality', angular.mock.inject(function(Resource, $httpBackend) {
-    $httpBackend.expectPOST(baseUrl, { name: 'test hero' }).respond(200, { name: 'another test' });
+    $httpBackend.expectPOST('localhost:3000/api/heroes', { name: 'test hero' }).respond(200, { name: 'another test' });
     var testArr = [];
     var errorsArr =[];
-    var testResource = new resource(testArr, errorsArr, baseUrl)
+    var testResource = new Resource(testArr, errorsArr, 'localhost:3000/api/heroes')
     testResource.create({ name: 'test hero' });
     $httpBackend.flush();
 
@@ -39,8 +39,8 @@ describe('resource service', function() {
     var testHero = { name: 'not test', _id: 1 };
     var testArr = [testHero];
     var errorsArr = [];
-    var testResource = new resource(testArr, errorsArr, 'http://localhost:3000/api/heroes');
-    var result = resource.update(testHero);
+    var testResource = new Resource(testArr, errorsArr, 'http://localhost:3000/api/heroes');
+    var result = testResource.update(testHero);
     $httpBackend.flush();
 
     expect(errorsArr.length).toBe(0);

@@ -68,7 +68,7 @@ describe('villain controller', function() {
       vilctrl.villains = [{ name: 'test villain', _id: 1 }];
       vilctrl.deleteVillain(vilctrl.villains[0]);
       $httpBackend.flush();
-      expect(vilctrl.villains.length).toBe(0);
+      expect(vilctrl.remote.data.length).toBe(0);
     });
   });
 });

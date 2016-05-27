@@ -3,10 +3,10 @@ var baseUrl = require('../../config').baseUrl;
 
 module.exports = function(app) {
   app.controller('VillainController',
-  ['$scope', 'Resource', function($scope, Resource) {
+  ['Resource', function(Resource) {
     this.villains = [];
     this.errors = [];
-    $scope.master = {};
+    this.master = {};
 
     var vilErrMessages = {
       getAll: 'could not GET villains',
@@ -15,35 +15,35 @@ module.exports = function(app) {
       remove: 'could not DELETE villains'
     };
 
-    var remote = new Resource(this.villains, this.errors,
+    this.remote = new Resource(this.villains, this.errors,
       baseUrl + '/api/villains', { errorMsg: vilErrMessages });
 
-    this.getVillains = remote.getAll.bind(remote);
+    this.getVillains = this.remote.getAll.bind(this.remote);
 
     this.makeVillain = function() {
-      remote.create(this.newVillain)
+      this.remote.create(this.newVillain)
         .then(() => {
           this.newVillain = null;
         });
     }.bind(this);
 
-    this.deleteVillain = remote.remove.bind(remote);
+    this.deleteVillain = this.remote.remove.bind(this.remote);
 
     this.editVillain = function(villain) {
-      remote.update(villain)
+      this.remote.update(villain)
         .then(() => {
           villain.editing = false;
-          $scope.master = angular.copy(villain);
+          this.master = angular.copy(villain);
         });
-    };
+    }.bind(this);
 
-    this.vilStore = (villain) => {
-      $scope.master = angular.copy(villain);
-    };
+    this.vilStore = function(villain) {
+      this.master = angular.copy(villain);
+    }.bind(this);
 
-    this.vilReset = (villain) => {
+    this.vilReset = function(villain) {
       var oldVillain = this.villains[this.villains.indexOf(villain)];
-      angular.copy($scope.master, oldVillain);
-    };
+      angular.copy(this.master, oldVillain);
+    }.bind(this);
   }]);
 };
