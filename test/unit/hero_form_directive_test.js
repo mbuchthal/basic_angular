@@ -8,8 +8,9 @@ describe('hero form directive', function() {
   var $compile;
   var $scope;
   var $rootScope;
+  var $controller;
 
-  beforeEach(angular.mock.inject(function(_$compile_, _$rootScope_, _$httpBackend_) {
+  beforeEach(angular.mock.inject(function(_$httpBackend_, _$compile_, _$rootScope_) {
     $httpBackend = _$httpBackend_;
     $compile = _$compile_;
     $rootScope = _$rootScope_;
@@ -17,19 +18,27 @@ describe('hero form directive', function() {
   }));
 
   it('should create a form directive with a controller binding', function() {
+
     $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
       .respond(200, heroFormTemplate);
 
     $scope.name = 'test name';
-    var link = $compile('<div data-hero-form hero.name="test" data></div>');
-    var directive = link($scope);
+    var directive = $compile('<div data-ng-controller="HeroController as heroctrl"><hero-form data-hero="{}"></hero-form> </div>')($scope); // eslint-disable-line
     $httpBackend.flush();
     $scope.$digest();
-    var el = directive.find('.hero_data');
-    expect(el.text()).toContain($scope.name);
-    var input = directive.find('input');
+    // var el = directive.find('p');
+    // expect(el.text()).toContain($scope.name);
+    var input = directive.find('form input');
+    console.log(input);
     input.val('new test name');
-    input.triggerHandler('input');
-    expect($scope.name).toEqual('some test name');
+    input.triggerHandler('form');
+    expect(directive.html()).toContain('new test name');
+
   });
+
+  // it('should transclude html', function() {
+  //     $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
+  //     .respond(200, heroFormTemplate);
+
+  // });
 });

@@ -7,12 +7,12 @@ module.exports = function(app) {
       require: '^ngController',
       transclude: true,
       templateUrl: '/templates/battles/directives/battle_list.html',
-      scope: {
+      scope:
+      {
         battle: '='
       },
       link: function(scope, element, attrs, controller) {
         scope.remove = controller.removeBattle;
-        scope.battle = controller.battle;
       }
     };
   });

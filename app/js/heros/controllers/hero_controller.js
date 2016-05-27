@@ -3,49 +3,47 @@ var baseUrl = require('../../config').baseUrl;
 
 module.exports = function(app) {
   app.controller('HeroController',
-  ['$http', '$scope', 'handleError',
-  function($http, $scope, handleError) {
+  ['Resource', function(Resource) {
     this.heroes = [];
     this.errors = [];
-    $scope.master = {};
+    this.master = {};
 
-    this.getHeroes = function() {
-      $http.get(baseUrl + '/api/heroes')
-        .then((res) => {
-          this.heroes = res.data;
-        }, handleError(this.errors, 'could not GET heroes'));
+    var heroErrMessages = {
+      getAll: 'could not GET heroes',
+      create: 'could not POST heroes',
+      update: 'could not UPDATE heroes',
+      remove: 'could not DELETE heroes'
     };
+
+    this.remote = new Resource(this.heroes, this.errors,
+      baseUrl + '/api/heroes', { errorMsg: heroErrMessages });
+
+    this.getHeroes = this.remote.getAll.bind(this.remote);
 
     this.makeHero = function() {
-      $http.post(baseUrl + '/api/heroes', this.newHero)
-        .then((res) => {
-          this.heroes.push(res.data);
+      this.remote.create(this.newHero)
+        .then(() => {
           this.newHero = null;
-        }, handleError(this.errors, 'could not POST heroes'));
+        });
     }.bind(this);
 
-    this.deleteHero = function(hero) {
-      $http.delete(baseUrl + '/api/heroes/' + hero._id)
-        .then(() => {
-          this.heroes.splice(this.heroes.indexOf(hero), 1);
-        }, handleError(this.errors, 'could not DELETE heroes'));
-    }.bind(this);
+    this.deleteHero = this.remote.remove.bind(this.remote);
 
     this.editHero = function(hero) {
-      $http.put(baseUrl + '/api/heroes/' + hero._id, hero)
+      this.remote.update(hero)
         .then(() => {
-          $scope.master = angular.copy(hero);
           hero.editing = false;
-        }, handleError(this.errors, 'could not UPDATE heroes'));
-    };
+          this.master = angular.copy(hero);
+        });
+    }.bind(this);
 
-    this.heroStore = (hero) => {
-      $scope.master = angular.copy(hero);
-    };
+    this.heroStore = function(hero) {
+      this.master = angular.copy(hero);
+    }.bind(this);
 
-    this.heroReset = (hero) => {
+    this.heroReset = function(hero) {
       var oldHero = this.heroes[this.heroes.indexOf(hero)];
-      angular.copy($scope.master, oldHero);
-    };
+      angular.copy(this.master, oldHero);
+    }.bind(this);
   }]);
 };

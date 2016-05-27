@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const webpack = require('webpack-stream');

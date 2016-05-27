@@ -3,47 +3,47 @@ var baseUrl = require('../../config').baseUrl;
 
 module.exports = function(app) {
   app.controller('VillainController',
-  ['$http', '$scope', 'handleError',
-  function($http, $scope, handleError) {
+  ['Resource', function(Resource) {
     this.villains = [];
-    $scope.master = {};
+    this.errors = [];
+    this.master = {};
 
-    this.getVillains = function() {
-      $http.get(baseUrl + '/api/villains')
-        .then((res) => {
-          this.villains = res.data;
-        }, handleError(this.errors, 'could not GET villains'));
-    }.bind(this);
+    var vilErrMessages = {
+      getAll: 'could not GET villains',
+      create: 'could not POST villains',
+      update: 'could not UPDATE villains',
+      remove: 'could not DELETE villains'
+    };
+
+    this.remote = new Resource(this.villains, this.errors,
+      baseUrl + '/api/villains', { errorMsg: vilErrMessages });
+
+    this.getVillains = this.remote.getAll.bind(this.remote);
 
     this.makeVillain = function() {
-      $http.post(baseUrl + '/api/villains', this.newVillain)
-        .then((res) => {
-          this.villains.push(res.data);
+      this.remote.create(this.newVillain)
+        .then(() => {
           this.newVillain = null;
-        }, handleError(this.errors, 'could not POST villains'));
+        });
     }.bind(this);
 
-    this.deleteVillain = function(villain) {
-      $http.delete(baseUrl + '/api/villains/' + villain._id)
-        .then(() => {
-          this.villains.splice(this.villains.indexOf(villain), 1);
-        }, handleError(this.errors, 'could not DELETE villains'));
-    }.bind(this);
+    this.deleteVillain = this.remote.remove.bind(this.remote);
 
     this.editVillain = function(villain) {
-      $http.put(baseUrl + '/api/villains/' + villain._id, villain)
+      this.remote.update(villain)
         .then(() => {
           villain.editing = false;
-        }, handleError(this.errors, 'could not UPDATE villains'));
+          this.master = angular.copy(villain);
+        });
     }.bind(this);
 
-    this.vilStore = (villain) => {
-      $scope.master = angular.copy(villain);
-    };
+    this.vilStore = function(villain) {
+      this.master = angular.copy(villain);
+    }.bind(this);
 
-    this.vilReset = (villain) => {
+    this.vilReset = function(villain) {
       var oldVillain = this.villains[this.villains.indexOf(villain)];
-      angular.copy($scope.master, oldVillain);
-    };
+      angular.copy(this.master, oldVillain);
+    }.bind(this);
   }]);
 };

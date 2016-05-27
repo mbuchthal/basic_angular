@@ -9,7 +9,7 @@
 <body data-ng-app="heroApp">
   <div class="background">
     <header>
-      <h1><span>Heros</span> vs. <span>Villains</span></h1>
+      <h1><span>Heroes</span> vs. <span>Villains</span></h1>
       <p>An Angular.js Demo</p>
     </header>
 
@@ -57,7 +57,7 @@
       </section>
     </div>
 
-  <section class="battles" data-ng-controller="BattleController as battlectrl">
+  <section class="battles" data-ng-controller="BattleController as battlectrl" ng-init="battlectrl.getBattles()">
     <h2>Battle!</h2>
     <button id="battle_btn" data-ng-click="battlectrl.battle()">Battle Button!</button>
     <ul id="battlelist">
