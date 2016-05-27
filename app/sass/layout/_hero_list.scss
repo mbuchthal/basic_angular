@@ -1,5 +1,5 @@
 div.create_new {
-  display: flex;
+  @include flexbox;
   section {
     h2 {
       font-size: 1.5em;
@@ -9,11 +9,11 @@ div.create_new {
       }
     }
     &.heroes {
-      width: 50%;
+      max-width: 45%;
       padding: 1em 2em;
     }
     &.villains {
-      width: 50%;
+      max-width: 45%;
       padding: 1em 2em;
       h2 {
         font-family: $font-villain;

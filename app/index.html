@@ -63,6 +63,9 @@
     <ul id="battlelist">
       <battle-list data-ng-repeat="battle in battlectrl.battles" data-battle="battle"></battle-list>
     </ul>
+    <ul>
+      <li ng-repeat="battle in battlectrl.battles">{{battle}}</li>
+    </ul>
   </section>
 </div>
   <script src="./bundle.js"></script>

@@ -4,7 +4,7 @@ var handleError = require('../../lib').handleError;
 
 module.exports = function(app) {
   app.controller('BattleController', ['$http', function($http) {
-    this.battles = [];
+    this.battles = ['test'];
 
     this.battle = function() {
       $http.get(baseUrl + '/api/battle')
