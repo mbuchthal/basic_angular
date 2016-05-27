@@ -18,27 +18,25 @@ describe('hero form directive', function() {
   }));
 
   it('should create a form directive with a controller binding', function() {
-
     $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
       .respond(200, heroFormTemplate);
 
     $scope.name = 'test name';
-    var directive = $compile('<div data-ng-controller="HeroController as heroctrl"><hero-form data-hero="{}"></hero-form> </div>')($scope); // eslint-disable-line
+    var directive = $compile('<div data-ng-controller="HeroController as heroctrl"><hero-form data-hero="{}"></hero-form></div>')($scope); // eslint-disable-line
     $httpBackend.flush();
     $scope.$digest();
-    // var el = directive.find('p');
-    // expect(el.text()).toContain($scope.name);
-    var input = directive.find('form input');
-    console.log(input);
-    input.val('new test name');
-    input.triggerHandler('form');
-    expect(directive.html()).toContain('new test name');
-
+    expect(directive.html()).toContain('save_btn');
   });
 
-  // it('should transclude html', function() {
-  //     $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
-  //     .respond(200, heroFormTemplate);
+  it('should transclude from parent scope', function() {
+    $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
+      .respond(200, heroFormTemplate);
+    $scope.text = 'test text';
+    $scope.description = 'test description';
+    var directive = $compile('<div data-ng-controller="HeroController as heroctrl"><hero-form data-text="text">{{description}}</hero-form></div>')($scope); // eslint-disable-line
+    $httpBackend.flush();
+    // expect(directive.html().indexOf('test text')).not.toBe(-1);
+    // expect(directive.html().indexOf('test description')).not.toBe(-1);
 
-  // });
+  });
 });
