@@ -3,10 +3,13 @@ var baseUrl = require('../../config').baseUrl;
 
 module.exports = function(app) {
   app.controller('VillainController',
-  ['Resource', function(Resource) {
+  ['Resource', 'store', function(Resource, store) {
     this.villains = [];
     this.errors = [];
     this.master = {};
+    this.counter = store;
+    this.getCount = store.getCount.bind(store);
+    this.addCount = store.addCount.bind(store);
 
     var vilErrMessages = {
       getAll: 'could not GET villains',

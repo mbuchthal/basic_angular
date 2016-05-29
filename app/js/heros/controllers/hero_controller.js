@@ -3,10 +3,13 @@ var baseUrl = require('../../config').baseUrl;
 
 module.exports = function(app) {
   app.controller('HeroController',
-  ['Resource', function(Resource) {
+  ['Resource', 'store', function(Resource, store) {
     this.heroes = [];
     this.errors = [];
     this.master = {};
+    this.counter = store;
+    this.getCount = store.getCount.bind(store);
+    this.addCount = store.addCount.bind(store);
 
     var heroErrMessages = {
       getAll: 'could not GET heroes',

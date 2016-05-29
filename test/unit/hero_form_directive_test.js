@@ -3,12 +3,12 @@ const angular = require('angular');
 const heroFormTemplate = require('../../app/templates/heros/directives/hero_form.html');
 
 describe('hero form directive', function() {
-  beforeEach(angular.mock.module('heroApp'));
   var $httpBackend;
   var $compile;
-  var $scope;
   var $rootScope;
-  var $controller;
+  var $scope;
+
+  beforeEach(angular.mock.module('heroApp'));
 
   beforeEach(angular.mock.inject(function(_$httpBackend_, _$compile_, _$rootScope_) {
     $httpBackend = _$httpBackend_;
@@ -31,12 +31,10 @@ describe('hero form directive', function() {
   it('should transclude from parent scope', function() {
     $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
       .respond(200, heroFormTemplate);
-    $scope.text = 'test text';
-    $scope.description = 'test description';
+    $scope.buttonText = 'test button';
     var directive = $compile('<div data-ng-controller="HeroController as heroctrl"><hero-form data-text="text">{{description}}</hero-form></div>')($scope); // eslint-disable-line
     $httpBackend.flush();
-    // expect(directive.html().indexOf('test text')).not.toBe(-1);
-    // expect(directive.html().indexOf('test description')).not.toBe(-1);
+    // expect(directive.html().indexOf('test button')).not.toBe(-1);
 
   });
 });

@@ -11,7 +11,6 @@ module.exports = function(app) {
     };
 
     this.battle = function() {
-      console.log(this.battles);
       $http.get(baseUrl + '/api/battle')
         .then((res) => {
           this.battles.push(res.data);
