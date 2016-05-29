@@ -33,6 +33,11 @@
             </hero-form>
           </hero-list-item>
         </ul>
+
+        <section>
+          <p>{{heroctrl.counter.count}}</p>
+          <button data-ng-click="heroctrl.addCount()">ADD</button>
+        </section>
       </section>
 
       <section class="villains" data-ng-controller="VillainController as vilctrl" data-ng-init="vilctrl.getVillains()">
@@ -54,6 +59,11 @@
             </villain-form>
           </villain-list-item>
         </ul>
+
+        <section>
+          <p>{{vilctrl.counter.count}}</p>
+          <button data-ng-click="vilctrl.addCount()">ADD</button>
+        </section>
       </section>
     </div>
 

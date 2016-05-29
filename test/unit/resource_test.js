@@ -3,7 +3,6 @@ const angular = require('angular');
 
 describe('resource service', function() {
   var $httpBackend;
-  var Resource;
   var baseUrl = 'http://localhost:3000/api/heroes';
 
   beforeEach(angular.mock.module('heroApp'));
@@ -14,18 +13,18 @@ describe('resource service', function() {
 
   it('should return a function', angular.mock.inject(function(Resource) {
     expect(typeof Resource).toBe('function');
-    var testResource = new Resource;
+    var testResource = new Resource();
     expect(typeof testResource.getAll).toBe('function');
     expect(typeof testResource.create).toBe('function');
     expect(typeof testResource.update).toBe('function');
     expect(typeof testResource.remove).toBe('function');
-  }))
+  }));
 
   it('should have post functionality', angular.mock.inject(function(Resource, $httpBackend) {
-    $httpBackend.expectPOST('localhost:3000/api/heroes', { name: 'test hero' }).respond(200, { name: 'another test' });
+    $httpBackend.expectPOST(baseUrl, { name: 'test hero' }).respond(200, { name: 'another test' });
     var testArr = [];
-    var errorsArr =[];
-    var testResource = new Resource(testArr, errorsArr, 'localhost:3000/api/heroes')
+    var errorsArr = [];
+    var testResource = new Resource(testArr, errorsArr, baseUrl)
     testResource.create({ name: 'test hero' });
     $httpBackend.flush();
 
@@ -35,11 +34,11 @@ describe('resource service', function() {
   }));
 
   it('should have update functionality', angular.mock.inject(function(Resource, $q) {
-    $httpBackend.expectPUT('http://localhost:3000/api/heroes/1', testHero).respond(200);
+    $httpBackend.expectPUT(baseUrl + '/1', testHero).respond(200);
     var testHero = { name: 'not test', _id: 1 };
     var testArr = [testHero];
     var errorsArr = [];
-    var testResource = new Resource(testArr, errorsArr, 'http://localhost:3000/api/heroes');
+    var testResource = new Resource(testArr, errorsArr, baseUrl);
     var result = testResource.update(testHero);
     $httpBackend.flush();
 
@@ -48,7 +47,7 @@ describe('resource service', function() {
   }));
 
   it('should have get functionality', angular.mock.inject( function(Resource) {
-    $httpBackend.expectGET('http://localhost:3000/api/heroes').respond(200);
+    $httpBackend.expectGET(baseUrl).respond(200);
 
   }));
 });

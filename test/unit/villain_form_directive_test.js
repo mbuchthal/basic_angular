@@ -1,8 +1,8 @@
 
 const angular = require('angular');
-const heroFormTemplate = require('../../app/templates/heros/directives/hero_form.html');
+const vilFormTemplate = require('../../app/templates/heros/directives/hero_form.html');
 
-describe('hero form directive', function() {
+describe('villain form directive', function() {
   var $httpBackend;
   var $compile;
   var $rootScope;
@@ -18,23 +18,23 @@ describe('hero form directive', function() {
   }));
 
   it('should create a form directive with a controller binding', function() {
-    $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
-      .respond(200, heroFormTemplate);
+    $httpBackend.expectGET('/templates/villains/directives/villain_form.html')
+      .respond(200, vilFormTemplate);
 
     $scope.name = 'test name';
-    var directive = $compile('<div data-ng-controller="HeroController as heroctrl"><hero-form data-hero="{}"></hero-form></div>')($scope); // eslint-disable-line
+    var directive = $compile('<div data-ng-controller="VillainController as vilctrl"><villain-form data-villain="{}"></villain-form></div>')($scope); // eslint-disable-line
     $httpBackend.flush();
     $scope.$digest();
     expect(directive.html()).toContain('save_btn');
   });
 
   it('should transclude from parent scope', function() {
-    $httpBackend.expectGET('/templates/heros/directives/hero_form.html')
-      .respond(200, heroFormTemplate);
+    $httpBackend.expectGET('/templates/villains/directives/villain_form.html')
+      .respond(200, vilFormTemplate);
     $scope.buttonText = 'test button';
-    var directive = $compile('<div data-ng-controller="HeroController as heroctrl"><hero-form data-text="text">{{description}}</hero-form></div>')($scope); // eslint-disable-line
+
+    var directive = $compile('<div data-ng-controller="VillainController as vilctrl"><villain-form><button>{{buttonText}}</button></villain-form></div>')($scope); // eslint-disable-line
     $httpBackend.flush();
     // expect(directive.html().indexOf('test button')).not.toBe(-1);
-
   });
 });
