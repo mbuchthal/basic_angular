@@ -1,21 +1,25 @@
-
 <form id="hero_form" data-ng-submit="save(hero)">
-  <fieldset>
-    <label for="name">Name:</label>
-    <input id="flibbity" type="text" name="name" data-ng-model="hero.name">
-  </fieldset>
-  <fieldset>
-    <label for="powerLevel">Power Level:</label>
-    <input type="text" name="powerLevel" placeholder="1-10" data-ng-model="hero.powerLevel">
-  </fieldset>
-  <fieldset>
-    <label for="superPower">Super Powers:</label>
-    <input data-ng-list type="text" name="superPower" placeholder="power1, power2, power3" data-ng-model="hero.superPower">
-  </fieldset>
-  <fieldset>
-    <label for="archNemesis">Archnemesis:</label>
-    <input type="text" name="archNemesis" data-ng-model="hero.archNemesis">
-  </fieldset>
-  <button id="save_btn" type="submit">{{buttonText}}</button>
+  <div class="flex_wrapper_1">
+    <fieldset>
+      <label for="name">Name:</label>
+      <input type="text" name="name" data-ng-model="hero.name">
+    </fieldset>
+    <fieldset>
+      <label for="powerLevel">Power Level:</label>
+      <input type="text" name="powerLevel" placeholder="1-10" data-ng-model="hero.powerLevel">
+    </fieldset>
+    <fieldset>
+      <label for="superPower">Super Powers:</label>
+      <input data-ng-list type="text" name="superPower" placeholder="power1, power2, power3" data-ng-model="hero.superPower">
+    </fieldset>
+    <fieldset>
+      <label for="archNemesis">Archnemesis:</label>
+      <input type="text" name="archNemesis" data-ng-model="hero.archNemesis">
+    </fieldset>
+  </div>
+  <div class="flex_wrapper_2">
+    <button class="hero_btn" id="save_btn" type="submit" data-ng-click="addCount()">{{buttonText}}</button>
+  </div>
+  <p>count: {{count}}</p>
   <ng-transclude></ng-transclude>
 </form>

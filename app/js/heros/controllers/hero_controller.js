@@ -21,16 +21,28 @@ module.exports = function(app) {
     this.remote = new Resource(this.heroes, this.errors,
       baseUrl + '/api/heroes', { errorMsg: heroErrMessages });
 
-    this.getHeroes = this.remote.getAll.bind(this.remote);
+    this.getHeroes = function() {
+      this.remote.getAll()
+        .then(() => {
+          this.counter.count = this.counter.count + this.heroes.length;
+        });
+      }.bind(this);
+
 
     this.makeHero = function() {
+      this.addCount();
       this.remote.create(this.newHero)
         .then(() => {
           this.newHero = null;
         });
     }.bind(this);
 
-    this.deleteHero = this.remote.remove.bind(this.remote);
+    this.deleteHero = function(hero) {
+      this.remote.remove(hero)
+        .then(() => {
+          this.counter.count--
+        })
+      }.bind(this);
 
     this.editHero = function(hero) {
       this.remote.update(hero)

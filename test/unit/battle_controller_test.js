@@ -31,10 +31,10 @@ describe('battle controller', function() {
     });
 
     it('should create a battle', function() {
-      $httpBackend.expectGET('http://localhost:3000/api/battle').respond(200);
+      $httpBackend.expectGET('http://localhost:3000/api/battle').respond(200, 'test string');
       battlectrl.battle();
       $httpBackend.flush();
-      expect(battlectrl.battles.length).toBe(1);
+      expect(battlectrl.battles.length).not.toBe(0);
     });
   });
 });

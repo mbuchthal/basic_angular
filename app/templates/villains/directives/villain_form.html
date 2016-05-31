@@ -1,21 +1,24 @@
-
 <form id="villain_form" data-ng-submit="save(villain)">
-  <fieldset>
-    <label>Name:</label>
-    <input type="text" data-ng-model="villain.name">
-  </fieldset>
-  <fieldset>
-    <label>Power Level:</label>
-    <input type="text" placeholder="1-10" data-ng-model="villain.powerLevel">
-  </fieldset>
-  <fieldset>
-    <label>Super Powers:</label>
-    <input data-ng-list type="text" placeholder="power1, power2, power3" data-ng-model="villain.superPower">
-  </fieldset>
-  <fieldset>
-    <label>Archnemesis:</label>
-    <input type="text" data-ng-model="villain.dastardlyDoGooder">
-  </fieldset>
-  <button id="save_btn" type="submit">{{buttonText}}</button>
+  <div class="flex_wrapper_2">
+    <button id="save_btn" class="villain_btn" type="submit" data-ng-click="vilctrl.addCount()">{{buttonText}}</button>
+  </div>
+  <div class="flex_wrapper_1">
+    <fieldset>
+      <label for="name">Name:</label>
+      <input type="text" name="name" data-ng-model="villain.name">
+    </fieldset>
+    <fieldset>
+      <label for="powerLevel">Power Level:</label>
+      <input type="text" name="powerLevel" placeholder="1-10" data-ng-model="villain.powerLevel">
+    </fieldset>
+    <fieldset>
+      <label for "superPower">Super Powers:</label>
+      <input data-ng-list type="text" name="superPower" placeholder="power1, power2, power3" data-ng-model="villain.superPower">
+    </fieldset>
+    <fieldset>
+      <label for="archNemesis">Archnemesis:</label>
+      <input type="text" name="archNemesis" data-ng-model="villain.dastardlyDoGooder">
+    </fieldset>
+  </div>
   <ng-transclude></ng-transclude>
 </form>

@@ -28,3 +28,23 @@
     float: right;
   }
 }
+
+hero-form {
+  form {
+    @include flexbox(center, space-around, row);
+  }
+}
+
+villain-form {
+  form {
+    @include flexbox(center, space-around, row);
+  }
+}
+
+.flex_wrapper_1 {
+  @include flex_item(2, 0);
+}
+
+.flex_wrapper_2 {
+  margin: auto;
+}

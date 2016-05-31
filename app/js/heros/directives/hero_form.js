@@ -9,12 +9,14 @@ module.exports = function(app) {
       scope: {
         hero: '=',
         buttonText: '@',
-        saveMethod: '@'
+        saveMethod: '@',
+        counter: '='
       },
       link: function(scope, element, attrs, controller) {
         var actions = {
           update: controller.editHero,
-          create: controller.makeHero
+          create: controller.makeHero,
+          addCount: controller.addCount
         };
         scope.save = actions[scope.saveMethod];
       }

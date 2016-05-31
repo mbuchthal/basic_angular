@@ -24,7 +24,7 @@ describe('resource service', function() {
     $httpBackend.expectPOST(baseUrl, { name: 'test hero' }).respond(200, { name: 'another test' });
     var testArr = [];
     var errorsArr = [];
-    var testResource = new Resource(testArr, errorsArr, baseUrl)
+    var testResource = new Resource(testArr, errorsArr, baseUrl);
     testResource.create({ name: 'test hero' });
     $httpBackend.flush();
 
@@ -46,7 +46,7 @@ describe('resource service', function() {
     expect(result instanceof $q).toBe(true);
   }));
 
-  it('should have get functionality', angular.mock.inject( function(Resource) {
+  it('should have get functionality', angular.mock.inject(function() {
     $httpBackend.expectGET(baseUrl).respond(200);
 
   }));
