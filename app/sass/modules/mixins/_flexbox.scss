@@ -11,9 +11,9 @@
   -webkit-align-content: $align;
   align-content: $align;
 }
-@mixin flex_item {
-  -webkit-flex-grow: 1;
-  -webkit-flex-shrink: 0;
-  flex-grow: 1;
-  flex-shrink: 0;
+@mixin flex_item ($flex-grow: 1, $flex-shrink: 0) {
+  -webkit-flex-grow: $flex-grow;
+  -webkit-flex-shrink: $flex-shrink;
+  flex-grow: $flex-grow;
+  flex-shrink: $flex-shrink;
 }

@@ -1,9 +1,17 @@
 
 @import 'base/reset';
 @import 'theme/typography';
+@import 'theme/colors';
+
+/*-- mixins --*/
+
 @import 'modules/mixins/flexbox';
+
+/*-- layout --*/
+
 @import 'layout/layout';
 @import 'layout/hero_list';
+
 /*-- modules --*/
 
 @import 'modules/header';

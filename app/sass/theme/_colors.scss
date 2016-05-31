@@ -1,0 +1,19 @@
+
+$color-hero: #39C;
+$color-villain: #F00;
+$color-sub: #EED2EE;
+$color-btn-text: #f5f5f5;
+
+$colors: (
+  "hero": #39C,
+  "villain": #F00,
+  "sub": #EED2EE,
+  "btn-text": #f5f5f5
+);
+
+@function color($key) {
+  @if not map-has-key($colors, $key) {
+    @warn "Key `#{$key}` not found.";
+  }
+  @return map-get($colors, $key);
+}

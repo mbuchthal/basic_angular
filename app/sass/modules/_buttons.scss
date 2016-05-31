@@ -1,13 +1,27 @@
-button {
-  border-radius: 6em;
-  background-color: lightcyan;
-}
 
 #battle_button {
   text-align: center;
   position: absolute;
 }
 
-#make_villain_btn {
-  float: right;
+.hero_btn {
+    width: 5em;
+    height: 5em;
+    border: 2px solid $color-btn-text;
+    border-radius: 50%;
+    color: $color-btn-text;
+    background: $color-hero;
+    font-size: 1em;
+    margin: 2em 4em;
+    &:hover {
+      background: #262626;
+  }
+}
+
+.villain_btn {
+  @extend .hero_btn;
+  background: $color-villain;
+  &:hover {
+    background: #262626;
+  }
 }

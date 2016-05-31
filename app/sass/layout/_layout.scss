@@ -18,8 +18,8 @@ body {
 		background-image:
 		radial-gradient(
 			circle at center right,
-			#EED2EE,
-			#39C
+			color(sub),
+			color(hero)
 		);
 	}
 	background-repeat: no-repeat;
@@ -34,8 +34,8 @@ body {
 		background-image:
 			radial-gradient(
 			circle at center left,
-			#EED2EE,
-			#F00
+			color(sub),
+			color(villain)
 		);
 	}
 }
@@ -45,7 +45,7 @@ h1 {
 }
 
 h2 {
-	font-size: 1em;
+	font-size: 1.5em;
 	padding: 0 1em;
 	text-align: center;
 }
