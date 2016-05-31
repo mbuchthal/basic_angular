@@ -9,7 +9,7 @@
 <body data-ng-app="heroApp">
   <div class="background">
     <header>
-      <h1><span>Heroes</span> vs. <span>Villains</span></h1>
+      <h1><span>Heroes</span>vs.<span>Villains</span></h1>
       <p>An Angular.js Demo</p>
     </header>
 
@@ -34,11 +34,7 @@
           </hero-list-item>
         </ul>
 
-        <section>
-
-          <button data-ng-click="heroctrl.addCount()">ADD</button>
-        </section>
-        <p>{{heroctrl.counter.count}}</p>
+        <p class="hero_count">The total number of Heroes and Villains: {{heroctrl.counter.count}}</p>
       </section>
 
       <section class="villains" data-ng-controller="VillainController as vilctrl" data-ng-init="vilctrl.getVillains()">
@@ -60,15 +56,10 @@
             </villain-form>
           </villain-list-item>
         </ul>
-
-        <section>
-          <p>{{vilctrl.counter.count}}</p>
-<!--           <button data-ng-click="vilctrl.addCount()">ADD</button> -->
-        </section>
       </section>
     </div>
 
-  <section class="battles" data-ng-controller="BattleController as battlectrl" ng-init="battlectrl.getBattles()">
+  <section class="battles" data-ng-controller="BattleController as battlectrl">
     <h2>Battle!</h2>
     <button id="battle_btn" data-ng-click="battlectrl.battle()">Battle Button!</button>
     <section id="battlelist">

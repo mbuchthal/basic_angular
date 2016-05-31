@@ -12,7 +12,6 @@ module.exports = function(app) {
     };
 
     this.battle = function() {
-
       this.battles = '';
       $http.get(baseUrl + '/api/battle')
         .then((res) => {

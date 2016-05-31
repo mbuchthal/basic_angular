@@ -21,16 +21,27 @@ module.exports = function(app) {
     this.remote = new Resource(this.villains, this.errors,
       baseUrl + '/api/villains', { errorMsg: vilErrMessages });
 
-    this.getVillains = this.remote.getAll.bind(this.remote);
+    this.getVillains = function() {
+      this.remote.getAll()
+        .then(() => {
+          this.counter.count = this.counter.count + this.villains.length;
+        });
+      }.bind(this);
 
     this.makeVillain = function() {
-      this.remote.create(this.newVillain)
-        .then(() => {
-          this.newVillain = null;
-        });
+      this.addCount();
+        this.remote.create(this.newVillain)
+          .then(() => {
+            this.newVillain = null;
+          });
     }.bind(this);
 
-    this.deleteVillain = this.remote.remove.bind(this.remote);
+    this.deleteVillain = function(villain) {
+      this.remote.remove(villain)
+        .then(() => {
+          this.counter.count--
+        });
+    }.bind(this);
 
     this.editVillain = function(villain) {
       this.remote.update(villain)
