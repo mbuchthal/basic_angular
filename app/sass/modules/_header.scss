@@ -17,3 +17,19 @@ header {
     font-family: $font-villain;
   }
 }
+
+.heroes_title, .villains_title {
+  animation: fadeIn 2s;
+  -webkit-animation: fadeIn 2s;
+}
+
+@include keyframes(fadeIn) {
+  from {
+    @include transform(translateY(-200px));
+    opacity: 0;
+  }
+  to {
+    @include transform(translateY(0));
+    opacity: 1;
+  }
+}

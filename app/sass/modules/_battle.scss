@@ -1,0 +1,15 @@
+
+.battles {
+  text-align: center;
+  h2 {
+    padding: 2em 0 1em;
+  }
+  button {
+    margin-bottom: 2em;
+  }
+  &:before {
+    display: table;
+    content: '';
+    clear: both;
+  }
+}

@@ -1,5 +1,5 @@
 
-@mixin flexbox ($align: center, $justify-content: center, $flex-direction: row) {
+@mixin flexboxy ($align: center, $justify-content: center, $flex-direction: row) {
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: $flex-direction;

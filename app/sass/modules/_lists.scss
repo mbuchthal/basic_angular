@@ -1,5 +1,41 @@
 
-#villainlist {
-  text-align: right;
+div.create_new {
+  @include outer-container(90%);
+  @include flexboxy(center, space-around, row);
+  section {
+    h2 {
+      padding: 0 0 1em 0;
+
+    }
+    &.heroes {
+      padding: 1em 2em;
+    }
+    &.villains {
+      padding: 1em 2em;
+
+    }
+  }
+}
+
+.heroes_list {
+  @include span-columns(6);
+  h2 {
+    font-family: $font-hero;
+  }
+  ul {
+    @include span-columns(10);
+  }
+}
+
+.villains_list {
   float: right;
+  text-align: right;
+  @include direction-context(right-to-left) {
+   .right-to-left-block {
+     @include span-columns(6);
+    }
+  }
+  h2 {
+    font-family: $font-villain;
+  }
 }

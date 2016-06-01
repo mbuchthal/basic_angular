@@ -26,7 +26,7 @@ module.exports = function(app) {
         .then(() => {
           this.counter.count = this.counter.count + this.heroes.length;
         });
-      }.bind(this);
+    }.bind(this);
 
 
     this.makeHero = function() {
@@ -40,9 +40,9 @@ module.exports = function(app) {
     this.deleteHero = function(hero) {
       this.remote.remove(hero)
         .then(() => {
-          this.counter.count--
-        })
-      }.bind(this);
+          this.counter.count--;
+        });
+    }.bind(this);
 
     this.editHero = function(hero) {
       this.remote.update(hero)

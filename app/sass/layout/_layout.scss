@@ -18,7 +18,7 @@ body {
 		background-image:
 		radial-gradient(
 			circle at center right,
-			color(sub),
+			lighten(color(hero), 50%),
 			color(hero)
 		);
 	}
@@ -34,7 +34,7 @@ body {
 		background-image:
 			radial-gradient(
 			circle at center left,
-			color(sub),
+			lighten(color(villain), 50%),
 			color(villain)
 		);
 	}
@@ -52,7 +52,7 @@ h2 {
 
 li {
 	list-style: none;
-	padding: 1em;
+	padding: 1em 0;
 	p {
 		padding-bottom: 0.5em;
 	}
@@ -64,13 +64,4 @@ fieldset {
 
 input {
 	width: 17em;
-}
-
-.battles {
-	text-align: center;
-	padding: 1em 0 1em;
-}
-
-.villains {
-	float: right;
 }
