@@ -11,6 +11,7 @@ const protractor = require('gulp-protractor').protractor;
 const mongoUri = 'mongodb://localhost/test_server';
 const minify = require('gulp-minify-css');
 const html = require('html-loader');
+const neat = require('node-neat').includePaths;
 
 var files = ['server.js', 'gulpfile.js'];
 var appFiles = 'app/**/*.js';
@@ -27,7 +28,9 @@ var nodemonOptions = {
 gulp.task('sass', function() {
   return gulp.src('./app/sass/**/*.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass({
+      includePaths: ['sass'].concat(neat)
+    }).on('error', sass.logError))
     .pipe(minify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./build'));

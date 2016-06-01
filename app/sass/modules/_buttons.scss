@@ -14,7 +14,7 @@
     font-size: 1em;
     margin: 2em 4em;
     &:hover {
-      background: #262626;
+      background: darken(color(sub), 60%);
   }
 }
 
@@ -22,6 +22,6 @@
   @extend .hero_btn;
   background: $color-villain;
   &:hover {
-    background: #262626;
+    background: darken(color(sub), 60%);
   }
 }

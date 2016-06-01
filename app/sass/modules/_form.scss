@@ -1,6 +1,5 @@
 
 #hero_form {
-  padding-left: 1em;
   label {
     display: inline;
     float: left;
@@ -14,13 +13,11 @@
 }
 
 #villain_form {
-  padding-right: 1em;
   label {
     display: inline;
     float: right;
     clear: right;
     width: 8em;
-    margin-left: 3em;
     text-align: right;
   }
   input {
@@ -31,20 +28,12 @@
 
 hero-form {
   form {
-    @include flexbox(center, space-around, row);
+    @include flexboxy(center, flex-start, row);
   }
 }
 
 villain-form {
   form {
-    @include flexbox(center, space-around, row);
+    @include flexboxy(center, flex-end, row);
   }
-}
-
-.flex_wrapper_1 {
-  @include flex_item(2, 0);
-}
-
-.flex_wrapper_2 {
-  margin: auto;
 }

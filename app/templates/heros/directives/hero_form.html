@@ -1,4 +1,4 @@
-<form id="hero_form" data-ng-submit="save(hero)">
+<form id="hero_form" class="hero_wrapper" data-ng-submit="save(hero)">
   <div class="flex_wrapper_1">
     <fieldset>
       <label for="name">Name:</label>
@@ -20,6 +20,5 @@
   <div class="flex_wrapper_2">
     <button class="hero_btn" id="save_btn" type="submit" data-ng-click="addCount()">{{buttonText}}</button>
   </div>
-  <p>count: {{count}}</p>
   <ng-transclude></ng-transclude>
 </form>

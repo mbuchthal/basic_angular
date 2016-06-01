@@ -26,20 +26,20 @@ module.exports = function(app) {
         .then(() => {
           this.counter.count = this.counter.count + this.villains.length;
         });
-      }.bind(this);
+    }.bind(this);
 
     this.makeVillain = function() {
       this.addCount();
-        this.remote.create(this.newVillain)
-          .then(() => {
-            this.newVillain = null;
-          });
+      this.remote.create(this.newVillain)
+        .then(() => {
+          this.newVillain = null;
+        });
     }.bind(this);
 
     this.deleteVillain = function(villain) {
       this.remote.remove(villain)
         .then(() => {
-          this.counter.count--
+          this.counter.count--;
         });
     }.bind(this);
 
