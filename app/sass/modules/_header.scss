@@ -1,7 +1,7 @@
 
 header {
   font-family: $font-main;
-  padding: 3em 0 2em;
+
   background-color: dark blue;
   h1 {
     font-size: 2em;
@@ -15,6 +15,15 @@ header {
   }
   span:last-child {
     font-family: $font-villain;
+  }
+}
+
+$padding: 30px;
+header {
+ @if ($padding < 20px) {
+  padding: 3em 0 2em;
+  } @else {
+    padding: 1em 0 1em;
   }
 }
 
